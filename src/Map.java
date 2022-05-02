@@ -10,6 +10,7 @@ public class Map {
     private Random random = new Random();
     private List<Tank> tanks = new ArrayList<Tank>();
     private List<Entity> entities = new ArrayList<Entity>();
+    private Bullet bullet;
 
     public Map(int width, int height, int numPlayer) {
         this.width = width;
@@ -19,7 +20,9 @@ public class Map {
         // TODO: Remove these lines
         Tank tankA = new Tank(10, 10);
         Tank tankB = new Tank(100, 100);
-        Bullet bullet = new Bullet(1, 1, 0, 1);
+        tankA.setSize(30, 40);
+        tankB.setSize(30, 40);
+        bullet = new Bullet(1, 1, 0, 0);
         tanks.add(tankA);
         tanks.add(tankB);
         entities.add(tankA);
@@ -30,6 +33,20 @@ public class Map {
     public void tick() {
         for (Entity entity : entities) {
             entity.animate();
+        }
+
+        for (int i = 0; i < tanks.size(); i++) {
+            for (int j = i + 1; j < tanks.size(); j++) {
+                if (tanks.get(i).isHit(tanks.get(j))) {
+                    System.out.println("Hit");
+                }
+            }
+        }
+
+        for (Tank tank : tanks) {
+            if (tank.isHit(bullet)){
+                System.out.println("Hit");
+            }
         }
     }
 

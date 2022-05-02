@@ -79,7 +79,7 @@ public class Game extends JFrame {
                     g.setColor(Color.RED);
                     g.fillRect(x, y, 5, 5);
                 } else {
-                    g.drawImage(imageTank, x, y, 40, 40, Color.white, null);
+                    g.drawImage(imageTank, x, y, 30, 40, Color.white, null);
                 }
 
             }

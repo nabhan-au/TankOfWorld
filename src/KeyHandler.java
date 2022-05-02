@@ -21,12 +21,16 @@ public class KeyHandler extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == moveUp) {
+            tank.setDirection("up");
             tank.moveUp();
         } else if (e.getKeyCode() == moveDown) {
+            tank.setDirection("down");
             tank.moveDown();
         } else if (e.getKeyCode() == moveLeft) {
+            tank.setDirection("left");
             tank.moveLeft();
         } else if (e.getKeyCode() == moveRight) {
+            tank.setDirection("right");
             tank.moveRight();
         }
     }
