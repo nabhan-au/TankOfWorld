@@ -54,16 +54,18 @@ public class Game extends JFrame {
 
     class GamePanal extends JPanel {
         private Map map;
+        private Image imageTank = new ImageIcon("assets/imgs/tank/tank_a.png").getImage();
 
         public GamePanal(Map map) {
             super();
             this.map = map;
-            addKeyListener(new KeyHandler(map.getTank(0), KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, KeyEvent.VK_DOWN));
+            addKeyListener(new KeyHandler(map.getTank(0), KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP,
+                    KeyEvent.VK_DOWN));
         }
 
         @Override
         public void paint(Graphics g) {
-            super.paint(g);
+
             paintElements(g);
         }
 
@@ -77,7 +79,7 @@ public class Game extends JFrame {
                     g.setColor(Color.RED);
                     g.fillRect(x, y, 5, 5);
                 } else {
-                    g.fillRect(x, y, 20, 20);
+                    g.drawImage(imageTank, x, y, 30, 40, Color.white, null);
                 }
 
             }
