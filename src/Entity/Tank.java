@@ -22,4 +22,8 @@ public class Tank extends MovingEntity {
         this.setMovingDirection(0, 1);
     }
 
+    public void stopMove() {
+        this.setMovingDirection(0, 0);
+    }
+
 }
