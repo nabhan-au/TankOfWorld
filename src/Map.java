@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,6 +11,7 @@ import javax.swing.*;
 public class Map {
     private int width;
     private int height;
+    private int  mapTile[][];
     private Random random = new Random();
     private List<Tank> tanks = new ArrayList<Tank>();
     private List<Entity> entities = new ArrayList<Entity>();
@@ -21,6 +23,7 @@ public class Map {
 
         // TODO: Generate the entities in the Map.
         // TODO: Remove these lines
+        loadMap();
 
         Tank tankA = new Tank(10, 10);
         tankA.setImages(getTankImage());
@@ -63,6 +66,31 @@ public class Map {
                 System.out.println("Hit");
             }
         }
+    }
+
+    public void loadMap() {
+        mapTile = new int[height/40][width/40];
+        try {
+            File file=new File("map1.txt");    //creates a new file instance
+            FileReader fr=new FileReader(file);
+            BufferedReader buffer = new BufferedReader(fr);
+            for (int i = 0; i < height/40; i++) {
+                String line = buffer.readLine();
+                for (int j = 0; j < width/40; j++) {
+                    String[] nums = line.split(" ");
+                    int num = Integer.parseInt(nums[j]);
+                    mapTile[i][j] = num;
+                }
+            }
+            buffer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public int[][] getMapTile() {
+        return mapTile;
     }
 
     public int getWidth() {

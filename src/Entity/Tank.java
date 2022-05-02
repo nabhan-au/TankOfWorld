@@ -4,9 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import static java.lang.Integer.max;
-import static java.lang.Integer.min;
-
 public class Tank extends MovingEntity {
     private String direction = "up";
     private List<Image> images;

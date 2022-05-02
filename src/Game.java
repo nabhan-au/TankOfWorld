@@ -1,15 +1,14 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.util.ArrayList;
 import java.util.List;
 
 import Entity.*;
+import Tile.Tile;
+import Tile.TileManager;
 
 import java.awt.*;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.*;
 
 public class Game extends JFrame {
     private Map map;
@@ -55,10 +54,12 @@ public class Game extends JFrame {
 
     class GamePanal extends JPanel {
         private Map map;
+        private TileManager tileManager;
 
         public GamePanal(Map map) {
             super();
             this.map = map;
+            this.tileManager = new TileManager();
             addKeyListener(new KeyHandler(map.getTank(0), KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP,
                     KeyEvent.VK_DOWN));
         }
@@ -66,19 +67,28 @@ public class Game extends JFrame {
         @Override
         public void paint(Graphics g) {
             super.paint(g);
+            paintTile(g);
             paintElements(g);
         }
 
         public void paintElements(Graphics g) {
             List<Entity> entities = map.getEntities();
-
             for (Entity entity : entities) {
-                if (entity instanceof Bullet) {
                     entity.draw(g);
-                } else {
-                    entity.draw(g);
-                }
+            }
+        }
 
+        public void paintTile(Graphics g) {
+            int intMap[][] = map.getMapTile();
+            Tile[] tile = tileManager.getTiles();
+            int col = 0;
+            while (col < map.getWidth()/40){
+                int row = 0;
+                while (row < map.getHeight()/40){
+                    g.drawImage(tile[intMap[col][row]].getImage(), col*40, row*40, 40, 40, null);
+                    row++;
+                }
+                col++;
             }
         }
     }
