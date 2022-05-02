@@ -37,7 +37,7 @@ public class Game extends JFrame {
                 while (true) {
                     map.tick();
                     try {
-                        sleep(5);
+                        sleep(1000/60);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -58,30 +58,7 @@ public class Game extends JFrame {
         public GamePanal(Map map) {
             super();
             this.map = map;
-            addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    switch (e.getKeyCode()) {
-                        case KeyEvent.VK_UP:
-                            map.getTank(0).moveUp();
-                            break;
-                        case KeyEvent.VK_DOWN:
-                            map.getTank(0).moveDown();
-                            break;
-                        case KeyEvent.VK_LEFT:
-                            map.getTank(0).moveLeft();
-                            break;
-                        case KeyEvent.VK_RIGHT:
-                            map.getTank(0).moveRight();
-                            break;
-                    }
-                }
-
-                @Override
-                public void keyReleased(KeyEvent e) {
-
-                }
-            });
+            addKeyListener(new KeyHandler(map.getTank(0), KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, KeyEvent.VK_DOWN));
         }
 
         @Override
