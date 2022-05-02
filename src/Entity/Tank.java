@@ -1,7 +1,15 @@
 package Entity;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+
+import static java.lang.Integer.max;
+import static java.lang.Integer.min;
+
 public class Tank extends MovingEntity {
     private String direction = "up";
+    private List<Image> images;
 
     public String getDirection() {
         return direction;
@@ -9,6 +17,23 @@ public class Tank extends MovingEntity {
 
     public void setDirection(String direction) {
         this.direction = direction;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public void draw(Graphics g) {
+        if (direction == "up"){
+            g.drawImage(images.get(0), getX(), getY(), getWidth(), getHeight(), null, null);
+        } else if (direction == "left"){
+            g.drawImage(images.get(1), getX(), getY(), getWidth(), getHeight(), null, null);
+        } else if (direction == "right"){
+            g.drawImage(images.get(2), getX(), getY(), getWidth(), getHeight(), null, null);
+        } else if (direction == "down"){
+            g.drawImage(images.get(3), getX(), getY(), getWidth(), getHeight(), null, null);
+        }
+
     }
 
     public Tank(int x, int y) {

@@ -1,5 +1,6 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.util.ArrayList;
 import java.util.List;
 
 import Entity.*;
@@ -54,7 +55,6 @@ public class Game extends JFrame {
 
     class GamePanal extends JPanel {
         private Map map;
-        private Image imageTank = new ImageIcon("assets/imgs/tank/tank_a.png").getImage();
 
         public GamePanal(Map map) {
             super();
@@ -73,13 +73,10 @@ public class Game extends JFrame {
             List<Entity> entities = map.getEntities();
 
             for (Entity entity : entities) {
-                int x = entity.getX();
-                int y = entity.getY();
                 if (entity instanceof Bullet) {
-                    g.setColor(Color.RED);
-                    g.fillRect(x, y, 5, 5);
+                    entity.draw(g);
                 } else {
-                    g.drawImage(imageTank, x, y, 30, 40, Color.white, null);
+                    entity.draw(g);
                 }
 
             }

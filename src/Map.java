@@ -1,8 +1,11 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import Entity.*;
+
+import javax.swing.*;
 
 public class Map {
     private int width;
@@ -18,16 +21,28 @@ public class Map {
 
         // TODO: Generate the entities in the Map.
         // TODO: Remove these lines
+
         Tank tankA = new Tank(10, 10);
+        tankA.setImages(getTankImage());
         Tank tankB = new Tank(100, 100);
-        tankA.setSize(30, 40);
-        tankB.setSize(30, 40);
+        tankB.setImages(getTankImage());
+        tankA.setSize(40, 40);
+        tankB.setSize(40, 40);
         bullet = new Bullet(1, 1, 0, 0);
         tanks.add(tankA);
         tanks.add(tankB);
         entities.add(tankA);
         entities.add(tankB);
         entities.add(bullet);
+    }
+
+    public List<Image> getTankImage() {
+        List<Image> tanks = new ArrayList<>();
+        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_up.png").getImage());
+        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_left.png").getImage());
+        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_right.png").getImage());
+        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_down.png").getImage());
+        return tanks;
     }
 
     public void tick() {

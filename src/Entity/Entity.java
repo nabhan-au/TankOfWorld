@@ -1,5 +1,8 @@
 package Entity;
 
+import java.awt.*;
+import java.util.List;
+
 public abstract class Entity {
     private int x;
     private int y;
@@ -36,6 +39,8 @@ public abstract class Entity {
         this.x = x;
         this.y = y;
     }
+
+    public void draw(Graphics g){}
 
     public boolean checkOverlap(int buttomLeftX1, int buttomLeftY1, int topRigtX1, int topRigtY1, int buttomLeftX2, int buttomLeftY2, int topRigtX2, int topRigtY2) {
         if (topRigtY1 < buttomLeftY2 
