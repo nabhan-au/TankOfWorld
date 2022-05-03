@@ -85,7 +85,10 @@ public class Game extends JFrame {
             while (col < map.getWidth()/40){
                 int row = 0;
                 while (row < map.getHeight()/40){
-                    g.drawImage(tile[intMap[col][row]].getImage(), col*40, row*40, 40, 40, null);
+                    g.drawImage(tile[0].getImage(), col*40, row*40, 40, 40, null);
+                    if (intMap[col][row] != 0) {
+                        g.drawImage(tile[intMap[col][row]].getImage(), col*40, row*40, 40, 40, null);
+                    }
                     row++;
                 }
                 col++;
