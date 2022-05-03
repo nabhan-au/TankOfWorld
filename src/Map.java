@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +6,6 @@ import java.util.Random;
 import Entity.*;
 import Entity.EntityList.Tank;
 import Entity.ImageSet.TankImageSet.TankImage;
-
-import javax.swing.*;
 
 public class Map {
     private int width;
@@ -42,6 +39,7 @@ public class Map {
             entity.animate();
         }
 
+        // TODO: Make these use better logic.
         for (int i = 0; i < tanks.size(); i++) {
             for (int j = i + 1; j < tanks.size(); j++) {
                 if (tanks.get(i).isHit(tanks.get(j))) {

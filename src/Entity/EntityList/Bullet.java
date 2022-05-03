@@ -1,7 +1,6 @@
 package Entity.EntityList;
 
 import java.awt.*;
-
 import Entity.MovingEntity;
 
 public class Bullet extends MovingEntity {

@@ -60,8 +60,13 @@ public class Game extends JFrame {
             super();
             this.map = map;
             this.tileManager = new TileManager();
-            addKeyListener(new KeyHandler(map.getTank(0), KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP,
-                    KeyEvent.VK_DOWN, KeyEvent.VK_SPACE));
+            addKeyListener(new KeyHandler(
+                    map.getTank(0),
+                    KeyEvent.VK_LEFT,
+                    KeyEvent.VK_RIGHT,
+                    KeyEvent.VK_UP,
+                    KeyEvent.VK_DOWN,
+                    KeyEvent.VK_SPACE));
         }
 
         @Override
