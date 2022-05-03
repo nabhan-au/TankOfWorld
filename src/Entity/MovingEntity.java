@@ -1,5 +1,7 @@
 package Entity;
 
+import Main.Game;
+
 public abstract class MovingEntity extends Entity {
     private Direction direction;
     private int speed;
@@ -36,7 +38,17 @@ public abstract class MovingEntity extends Entity {
         if (!isMoving) {
             return;
         }
-        this.setPosition(this.getX() + (speed * direction.getX()), this.getY() + (speed * direction.getY()));
+        int newX = this.getX() + (speed * direction.getX());
+        int newY = this.getY() + (speed * direction.getY());
+
+        if (newX <= 0
+                || newX + this.getWidth() >= Game.WIDTH
+                || newY <= 0
+                || newY + this.getHeight() >= Game.HEIGHT) {
+            this.stop();
+            return;
+        }
+        this.setPosition(newX, newY);
     }
 
 }
