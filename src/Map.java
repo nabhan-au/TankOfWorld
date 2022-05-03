@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import Entity.*;
+import Entity.EntityList.Tank;
 
 import javax.swing.*;
 
