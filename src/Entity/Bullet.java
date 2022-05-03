@@ -1,15 +1,15 @@
 package Entity;
 
 import java.awt.*;
-import java.util.List;
 
 public class Bullet extends MovingEntity {
-    public Bullet(int x, int y, int dx, int dy) {
-        super(x, y, dx, dy);
+    public Bullet(int x, int y) {
+        super(x, y);
     }
 
-    public void draw(Graphics g) {
-        g.setColor(Color.RED);
-        g.fillRect(getX(), getY(), 5, 5);
+    @Override
+    public void paint(Graphics g) {
+        g.setColor(Color.black);
+        g.fillOval(getX(), getY(), 5, 5);
     }
 }

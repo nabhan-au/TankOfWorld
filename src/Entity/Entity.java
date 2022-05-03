@@ -40,25 +40,26 @@ public abstract class Entity {
         this.y = y;
     }
 
-    public void draw(Graphics g){}
-
-    public boolean checkOverlap(int buttomLeftX1, int buttomLeftY1, int topRigtX1, int topRigtY1, int buttomLeftX2, int buttomLeftY2, int topRigtX2, int topRigtY2) {
-        if (topRigtY1 < buttomLeftY2 
-            || buttomLeftY1 > topRigtY2) {
+    public boolean checkOverlap(int buttomLeftX1, int buttomLeftY1, int topRigtX1, int topRigtY1, int buttomLeftX2,
+            int buttomLeftY2, int topRigtX2, int topRigtY2) {
+        if (topRigtY1 < buttomLeftY2
+                || buttomLeftY1 > topRigtY2) {
             return false;
         }
-        if (topRigtX1 < buttomLeftX2 
-            || buttomLeftX1 > topRigtX2) {
+        if (topRigtX1 < buttomLeftX2
+                || buttomLeftX1 > topRigtX2) {
             return false;
         }
         return true;
     }
 
     public boolean isHit(Entity another) {
-        return checkOverlap(x, y, x + width, y + height, another.getX(), another.getY(), another.getX() + another.getWidth(), another.getY() + another.getHeight());
+        return checkOverlap(x, y, x + width, y + height, another.getX(), another.getY(),
+                another.getX() + another.getWidth(), another.getY() + another.getHeight());
     }
 
     public void animate() {
-
     }
+
+    abstract public void paint(Graphics g);
 }
