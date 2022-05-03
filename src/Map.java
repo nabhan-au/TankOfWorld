@@ -11,11 +11,11 @@ import javax.swing.*;
 public class Map {
     private int width;
     private int height;
-    private int  mapTile[][];
+    private int mapTile[][];
     private Random random = new Random();
     private List<Tank> tanks = new ArrayList<Tank>();
+    // This is for the GUI Object to render each entity easily.
     private List<Entity> entities = new ArrayList<Entity>();
-    private Bullet bullet;
 
     public Map(int width, int height, int numPlayer) {
         this.width = width;
@@ -25,27 +25,14 @@ public class Map {
         // TODO: Remove these lines
         loadMap();
 
-        Tank tankA = new Tank(10, 10);
-        tankA.setImages(getTankImage());
-        Tank tankB = new Tank(100, 100);
-        tankB.setImages(getTankImage());
+        Tank tankA = new Tank(10, 10, 0);
+        Tank tankB = new Tank(100, 100, 0);
         tankA.setSize(40, 40);
         tankB.setSize(40, 40);
-        bullet = new Bullet(1, 1, 0, 0);
         tanks.add(tankA);
         tanks.add(tankB);
         entities.add(tankA);
         entities.add(tankB);
-        entities.add(bullet);
-    }
-
-    public List<Image> getTankImage() {
-        List<Image> tanks = new ArrayList<>();
-        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_up.png").getImage());
-        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_left.png").getImage());
-        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_right.png").getImage());
-        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_down.png").getImage());
-        return tanks;
     }
 
     public void tick() {
@@ -61,22 +48,24 @@ public class Map {
             }
         }
 
-        for (Tank tank : tanks) {
-            if (tank.isHit(bullet)){
-                System.out.println("Hit");
+        for (Entity entity : entities) {
+            for (Entity entity2 : entities) {
+                if (entity.isHit(entity2) && entity != entity2) {
+                    System.out.println("Hit");
+                }
             }
         }
     }
 
     public void loadMap() {
-        mapTile = new int[height/40][width/40];
+        mapTile = new int[height / 40][width / 40];
         try {
-            File file=new File("map1.txt");    //creates a new file instance
-            FileReader fr=new FileReader(file);
+            File file = new File("map1.txt"); // creates a new file instance
+            FileReader fr = new FileReader(file);
             BufferedReader buffer = new BufferedReader(fr);
-            for (int i = 0; i < height/40; i++) {
+            for (int i = 0; i < height / 40; i++) {
                 String line = buffer.readLine();
-                for (int j = 0; j < width/40; j++) {
+                for (int j = 0; j < width / 40; j++) {
                     String[] nums = line.split(" ");
                     int num = Integer.parseInt(nums[j]);
                     mapTile[i][j] = num;
@@ -87,6 +76,10 @@ public class Map {
             e.printStackTrace();
         }
 
+    }
+
+    public void addEntity(Entity entity) {
+        this.entities.add(entity);
     }
 
     public int[][] getMapTile() {
