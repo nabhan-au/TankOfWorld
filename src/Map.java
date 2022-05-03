@@ -1,22 +1,22 @@
-import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import Entity.*;
-
-import javax.swing.*;
+import Entity.EntityList.*;
+import Entity.EntityList.Tank;
+import Entity.ImageSet.TankImageSet.TankImage;
 
 public class Map {
     private int width;
     private int height;
-    private int  mapTile[][];
+    private int mapTile[][];
     private static int tileSize = 40;
     private Random random = new Random();
     private List<Tank> tanks = new ArrayList<Tank>();
+    // This is for the GUI Object to render each entity easily.
     private List<Entity> entities = new ArrayList<Entity>();
-    private Bullet bullet;
 
     public Map(int width, int height, int numPlayer) {
         this.width = width;
@@ -24,29 +24,17 @@ public class Map {
 
         // TODO: Generate the entities in the Map.
         // TODO: Remove these lines
-        loadMap();
+        loadMap("map1.txt");
 
-        Tank tankA = new Tank(10, 10);
-        tankA.setImages(getTankImage());
-        Tank tankB = new Tank(100, 100);
-        tankB.setImages(getTankImage());
-        tankA.setSize(tileSize, tileSize);
-        tankB.setSize(tileSize, tileSize);
-        bullet = new Bullet(1, 1, 0, 0);
+        Tank tankA = new Tank(40, 40, TankImage.A);
+        Tank tankB = new Tank(40, 40, TankImage.A);
+        tankA.setSize(40, 40);
+        tankB.setSize(40, 40);
         tanks.add(tankA);
         tanks.add(tankB);
         entities.add(tankA);
         entities.add(tankB);
-        entities.add(bullet);
-    }
-
-    public List<Image> getTankImage() {
-        List<Image> tanks = new ArrayList<>();
-        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_up.png").getImage());
-        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_left.png").getImage());
-        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_right.png").getImage());
-        tanks.add(new ImageIcon("assets/imgs/tank/tank_a_down.png").getImage());
-        return tanks;
+        System.out.println(entities);
     }
 
     public void tick() {
@@ -54,38 +42,40 @@ public class Map {
             entity.animate();
         }
 
-        for (int i = 0; i < tanks.size(); i++) {
-            for (int j = i + 1; j < tanks.size(); j++) {
-                if (tanks.get(i).isHit(tanks.get(j))) {
-                    System.out.println("Hit");
-                }
-            }
-        }
+//        for (int i = 0; i < tanks.size(); i++) {
+//            for (int j = i + 1; j < tanks.size(); j++) {
+//                if (tanks.get(i).isHit(tanks.get(j))) {
+//                    System.out.println("Hit");
+//                }
+//            }
+//        }
 
-        for (Tank tank : tanks) {
-            if (tank.isHit(bullet)){
-                System.out.println("Hit");
-            }
-        }
+//        for (Entity entity : entities) {
+//            for (Entity entity2 : entities) {
+//                if (entity.isHit(entity2) && entity != entity2) {
+//                    System.out.println("Hit");
+//                }
+//            }
+//        }
     }
 
-    public void loadMap() {
-        mapTile = new int[height/tileSize][width/tileSize];
+    public void loadMap(String map) {
+        mapTile = new int[height / tileSize][width / tileSize];
         try {
-            File file=new File("map1.txt");    //creates a new file instance
-            FileReader fr=new FileReader(file);
+            File file = new File(map); // creates a new file instance
+            FileReader fr = new FileReader(file);
             BufferedReader buffer = new BufferedReader(fr);
-            for (int i = 0; i < height/tileSize; i++) {
+            for (int i = 0; i < height / tileSize; i++) {
                 String line = buffer.readLine();
-                for (int j = 0; j < width/tileSize; j++) {
+                for (int j = 0; j < width / tileSize; j++) {
                     String[] nums = line.split(" ");
                     int num = Integer.parseInt(nums[j]);
                     if (num == 1) {
-                        entities.add(new Brick(i * tileSize, j * tileSize));
+                        entities.add(new Brick(i * tileSize, j * tileSize, tileSize, tileSize));
                     } else if (num == 2) {
-                        entities.add(new Steel(i * tileSize, j * tileSize));
+                        entities.add(new Steel(i * tileSize, j * tileSize, tileSize, tileSize));
                     }
-                    entities.add(new Floor(i * tileSize, j * tileSize));
+                    entities.add(new Floor(i * tileSize, j * tileSize, tileSize, tileSize));
                 }
             }
             buffer.close();
@@ -93,6 +83,10 @@ public class Map {
             e.printStackTrace();
         }
 
+    }
+
+    public void addEntity(Entity entity) {
+        this.entities.add(entity);
     }
 
     public int[][] getMapTile() {

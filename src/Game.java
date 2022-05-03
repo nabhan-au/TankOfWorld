@@ -3,8 +3,6 @@ import javax.swing.JPanel;
 import java.util.List;
 
 import Entity.*;
-import Tile.Tile;
-import Tile.TileManager;
 
 import java.awt.*;
 
@@ -59,7 +57,7 @@ public class Game extends JFrame {
             super();
             this.map = map;
             addKeyListener(new KeyHandler(map.getTank(0), KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP,
-                    KeyEvent.VK_DOWN));
+                    KeyEvent.VK_DOWN, KeyEvent.VK_SPACE));
         }
 
         @Override
@@ -71,7 +69,7 @@ public class Game extends JFrame {
         public void paintElements(Graphics g) {
             List<Entity> entities = map.getEntities();
             for (Entity entity : entities) {
-                    entity.draw(g);
+                entity.paint(g);
             }
         }
 
