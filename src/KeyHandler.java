@@ -41,7 +41,7 @@ public class KeyHandler extends KeyAdapter {
             currentKeyPress = e.getKeyCode();
             tank.move();
         } else if (e.getKeyCode() == shoot) {
-            // TODO: Implement the shoot logic.
+            tank.shoot();
         }
     }
 
