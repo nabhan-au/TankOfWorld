@@ -61,7 +61,7 @@ public class Game extends JFrame {
             this.map = map;
             this.tileManager = new TileManager();
             addKeyListener(new KeyHandler(map.getTank(0), KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP,
-                    KeyEvent.VK_DOWN));
+                    KeyEvent.VK_DOWN, KeyEvent.VK_SPACE));
         }
 
         @Override
@@ -74,7 +74,7 @@ public class Game extends JFrame {
         public void paintElements(Graphics g) {
             List<Entity> entities = map.getEntities();
             for (Entity entity : entities) {
-                    entity.draw(g);
+                entity.paint(g);
             }
         }
 
@@ -82,12 +82,12 @@ public class Game extends JFrame {
             int intMap[][] = map.getMapTile();
             Tile[] tile = tileManager.getTiles();
             int col = 0;
-            while (col < map.getWidth()/40){
+            while (col < map.getWidth() / 40) {
                 int row = 0;
-                while (row < map.getHeight()/40){
-                    g.drawImage(tile[0].getImage(), col*40, row*40, 40, 40, null);
+                while (row < map.getHeight() / 40) {
+                    g.drawImage(tile[0].getImage(), col * 40, row * 40, 40, 40, null);
                     if (intMap[col][row] != 0) {
-                        g.drawImage(tile[intMap[col][row]].getImage(), col*40, row*40, 40, 40, null);
+                        g.drawImage(tile[intMap[col][row]].getImage(), col * 40, row * 40, 40, 40, null);
                     }
                     row++;
                 }
