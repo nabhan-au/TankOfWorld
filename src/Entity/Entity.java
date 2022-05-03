@@ -1,7 +1,6 @@
 package Entity;
 
 import java.awt.*;
-import java.util.List;
 
 public abstract class Entity {
     private int x;

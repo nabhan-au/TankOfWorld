@@ -1,10 +1,12 @@
-package Entity;
+package Entity.EntityList;
 
 import java.awt.Graphics;
 
-public class Brick extends Entity {
+import Entity.Entity;
 
-    public Brick(int x, int y) {
+public class Steel extends Entity {
+
+    public Steel(int x, int y) {
         super(x, y);
     }
 

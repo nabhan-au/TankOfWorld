@@ -1,6 +1,8 @@
-package Entity;
+package Entity.EntityList;
 
 import java.awt.Graphics;
+
+import Entity.Entity;
 
 public class Tree extends Entity {
 

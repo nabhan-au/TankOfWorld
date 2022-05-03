@@ -1,5 +1,7 @@
-package Entity;
+package Entity.EntityList;
 
+import Entity.Direction;
+import Entity.MovingEntity;
 import Entity.ImageSet.ImageSet;
 import Entity.ImageSet.TankImageSet;
 import java.awt.*;
