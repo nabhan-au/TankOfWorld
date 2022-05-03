@@ -9,7 +9,7 @@ import java.awt.*;
 public class Tank extends MovingEntity {
     private ImageSet imageSet;
 
-    public Tank(int x, int y, int tankNo) {
+    public Tank(int x, int y, TankImageSet.TankImage tankNo) {
         super(x, y, 5);
         imageSet = TankImageSet.getTankImageSet(tankNo);
         this.setDirection(Direction.UP);

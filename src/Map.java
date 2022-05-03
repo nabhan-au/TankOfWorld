@@ -6,6 +6,7 @@ import java.util.Random;
 
 import Entity.*;
 import Entity.EntityList.Tank;
+import Entity.ImageSet.TankImageSet.TankImage;
 
 import javax.swing.*;
 
@@ -26,8 +27,8 @@ public class Map {
         // TODO: Remove these lines
         loadMap();
 
-        Tank tankA = new Tank(10, 10, 0);
-        Tank tankB = new Tank(100, 100, 0);
+        Tank tankA = new Tank(10, 10, TankImage.A);
+        Tank tankB = new Tank(100, 100, TankImage.A);
         tankA.setSize(40, 40);
         tankB.setSize(40, 40);
         tanks.add(tankA);
