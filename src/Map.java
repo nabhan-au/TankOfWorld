@@ -12,6 +12,7 @@ public class Map {
     private int width;
     private int height;
     private int  mapTile[][];
+    private static int tileSize = 40;
     private Random random = new Random();
     private List<Tank> tanks = new ArrayList<Tank>();
     private List<Entity> entities = new ArrayList<Entity>();
@@ -29,8 +30,8 @@ public class Map {
         tankA.setImages(getTankImage());
         Tank tankB = new Tank(100, 100);
         tankB.setImages(getTankImage());
-        tankA.setSize(40, 40);
-        tankB.setSize(40, 40);
+        tankA.setSize(tileSize, tileSize);
+        tankB.setSize(tileSize, tileSize);
         bullet = new Bullet(1, 1, 0, 0);
         tanks.add(tankA);
         tanks.add(tankB);
@@ -69,17 +70,22 @@ public class Map {
     }
 
     public void loadMap() {
-        mapTile = new int[height/40][width/40];
+        mapTile = new int[height/tileSize][width/tileSize];
         try {
             File file=new File("map1.txt");    //creates a new file instance
             FileReader fr=new FileReader(file);
             BufferedReader buffer = new BufferedReader(fr);
-            for (int i = 0; i < height/40; i++) {
+            for (int i = 0; i < height/tileSize; i++) {
                 String line = buffer.readLine();
-                for (int j = 0; j < width/40; j++) {
+                for (int j = 0; j < width/tileSize; j++) {
                     String[] nums = line.split(" ");
                     int num = Integer.parseInt(nums[j]);
-                    mapTile[i][j] = num;
+                    if (num == 1) {
+                        entities.add(new Brick(i * tileSize, j * tileSize));
+                    } else if (num == 2) {
+                        entities.add(new Steel(i * tileSize, j * tileSize));
+                    }
+                    entities.add(new Floor(i * tileSize, j * tileSize));
                 }
             }
             buffer.close();

@@ -30,7 +30,6 @@ public class Tank extends MovingEntity {
         } else if (direction == "down"){
             g.drawImage(images.get(3), getX(), getY(), getWidth(), getHeight(), null, null);
         }
-
     }
 
     public Tank(int x, int y) {
