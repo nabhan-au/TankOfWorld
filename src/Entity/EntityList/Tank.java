@@ -44,7 +44,7 @@ public class Tank extends MovingEntity {
     @Override
     public void paint(Graphics g) {
         Image image = imageSet.getImage(this.getDirection());
-        g.drawImage(image, this.getX(), this.getY(), 40, 40, null);
+        g.drawImage(image, this.getX(), this.getY(), getWidth(), getHeight(), null);
 
         for (Bullet bullet : bullets) {
             bullet.paint(g);
