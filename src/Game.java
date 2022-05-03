@@ -12,8 +12,8 @@ import java.awt.event.KeyEvent;
 
 public class Game extends JFrame {
     private Map map;
-    public static int WIDTH = 500;
-    public static int HEIGHT = 500;
+    public static int WIDTH = 1000;
+    public static int HEIGHT = 1000;
     private Thread gameThread;
     private GamePanal gamePanal;
 
