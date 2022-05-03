@@ -2,12 +2,11 @@ package Entity.EntityList;
 
 import Entity.Direction;
 import Entity.MovingEntity;
-import Entity.ImageSet.ImageSet;
 import Entity.ImageSet.TankImageSet;
 import java.awt.*;
 
 public class Tank extends MovingEntity {
-    private ImageSet imageSet;
+    private TankImageSet imageSet;
 
     public Tank(int x, int y, TankImageSet.TankImage tankNo) {
         super(x, y, 5);
