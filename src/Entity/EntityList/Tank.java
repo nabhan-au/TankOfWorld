@@ -1,7 +1,6 @@
 package Entity.EntityList;
 
 import Entity.Direction;
-import Entity.Entity;
 import Entity.MovingEntity;
 import Entity.ImageSet.TankImageSet;
 import java.awt.*;
