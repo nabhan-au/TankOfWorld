@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import java.util.List;
 
 import Entity.*;
+import Entity.ImageSet.BlockImageSet;
+import Entity.ImageSet.ImageSet;
 
 import java.awt.*;
 
@@ -13,16 +15,16 @@ import java.awt.event.KeyEvent;
 
 public class Game extends JFrame {
     private Map map;
-    public static int WIDTH = 1000;
-    public static int HEIGHT = 1000;
+    public static int BOARD_SIZE = 1000;
+    public static int BLOCK_SIZE = 40;
     private Thread gameThread;
     private GamePanal gamePanal;
 
     public Game() {
-        this.map = new Map(1000, 1000, 2);
+        this.map = new Map(BOARD_SIZE, BOARD_SIZE, 2);
         setAlwaysOnTop(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setPreferredSize(new Dimension(BOARD_SIZE, BOARD_SIZE));
 
         this.gamePanal = new GamePanal(map);
         add(gamePanal);
@@ -55,6 +57,7 @@ public class Game extends JFrame {
 
     class GamePanal extends JPanel {
         private Map map;
+        private ImageSet floorImageSet = BlockImageSet.getBlockImage(BlockImageSet.BlockImage.Floor);
 
         public GamePanal(Map map) {
             super();
@@ -66,11 +69,20 @@ public class Game extends JFrame {
                     KeyEvent.VK_UP,
                     KeyEvent.VK_DOWN,
                     KeyEvent.VK_SPACE));
+
+            addKeyListener(new KeyHandler(
+                    map.getTank(1),
+                    KeyEvent.VK_A,
+                    KeyEvent.VK_D,
+                    KeyEvent.VK_W,
+                    KeyEvent.VK_S,
+                    KeyEvent.VK_SPACE));
         }
 
         @Override
         public void paint(Graphics g) {
             super.paint(g);
+            paintFloor(g);
             paintElements(g);
         }
 
@@ -78,6 +90,14 @@ public class Game extends JFrame {
             List<Entity> entities = map.getEntities();
             for (Entity entity : entities) {
                 entity.paint(g);
+            }
+        }
+
+        public void paintFloor(Graphics g) {
+            for (int i = 0; i < BOARD_SIZE; i += BLOCK_SIZE) {
+                for (int j = 0; j < BOARD_SIZE; j += BLOCK_SIZE) {
+                    g.drawImage(floorImageSet.getUp(), i, j, BLOCK_SIZE, BLOCK_SIZE, null);
+                }
             }
         }
 
