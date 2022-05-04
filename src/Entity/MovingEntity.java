@@ -41,10 +41,10 @@ public abstract class MovingEntity extends Entity {
         int newX = this.getX() + (speed * direction.getX());
         int newY = this.getY() + (speed * direction.getY());
 
-        if (newX <= 0
-                || newX + this.getWidth() >= Game.WIDTH
-                || newY <= 0
-                || newY + this.getHeight() >= Game.HEIGHT) {
+        if (newX < 0
+                || newX + this.getWidth() > Game.BOARD_SIZE
+                || newY < 0
+                || newY + this.getHeight() > Game.BOARD_SIZE) {
             this.stop();
             return;
         }
