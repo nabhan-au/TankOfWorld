@@ -36,7 +36,7 @@ public class Map {
         tanks.add(tankB);
         entities.add(tankA);
         entities.add(tankB);
-        System.out.println(entities);
+        generateBoundary();
     }
 
     public void tick() {
@@ -44,21 +44,34 @@ public class Map {
             entity.animate();
         }
 
-        // for (int i = 0; i < tanks.size(); i++) {
-        // for (int j = i + 1; j < tanks.size(); j++) {
-        // if (tanks.get(i).isHit(tanks.get(j))) {
-        // System.out.println("Hit");
-        // }
-        // }
-        // }
+        for (Tank tank : tanks) {
+            List<Entity> hitList = tank.isBulletHit(entities);
+            if (hitList.size() >= 1) {
+                System.out.println(hitList);
+                System.out.println("X: " + hitList.get(0).getX() + " Y: " + hitList.get(0).getY());
 
-        // for (Entity entity : entities) {
-        // for (Entity entity2 : entities) {
-        // if (entity.isHit(entity2) && entity != entity2) {
-        // System.out.println("Hit");
-        // }
-        // }
-        // }
+            }
+
+        }
+    }
+
+    public void generateBoundary() {
+        for (int i = -1 * Game.BLOCK_SIZE; i < Game.BOARD_SIZE + Game.BLOCK_SIZE; i += Game.BLOCK_SIZE) {
+            InvisibleBlock invisibleBlock = new InvisibleBlock(i, -1 * Game.BLOCK_SIZE);
+            entities.add(invisibleBlock);
+        }
+
+        for (int i = 0; i < Game.BOARD_SIZE + Game.BLOCK_SIZE; i += Game.BLOCK_SIZE) {
+            InvisibleBlock invisibleBlock = new InvisibleBlock(-1 * Game.BLOCK_SIZE, i);
+            InvisibleBlock invisibleBlock2 = new InvisibleBlock(Game.BOARD_SIZE, i);
+            entities.add(invisibleBlock);
+            entities.add(invisibleBlock2);
+        }
+
+        for (int i = -1 * Game.BLOCK_SIZE; i < Game.BOARD_SIZE + Game.BLOCK_SIZE; i += Game.BLOCK_SIZE) {
+            InvisibleBlock invisibleBlock = new InvisibleBlock(i, Game.BOARD_SIZE);
+            entities.add(invisibleBlock);
+        }
     }
 
     public void loadMap(String map) {
@@ -72,7 +85,7 @@ public class Map {
                 for (int j = 0; j < width / tileSize; j++) {
                     String[] nums = line.split(" ");
                     int num = Integer.parseInt(nums[j]);
-                    entities.add(new Floor(i * tileSize, j * tileSize, tileSize, tileSize));
+                    // entities.add(new Floor(i * tileSize, j * tileSize, tileSize, tileSize));
                     if (num == 1) {
                         entities.add(new Brick(i * tileSize, j * tileSize, tileSize, tileSize));
                     } else if (num == 2) {
