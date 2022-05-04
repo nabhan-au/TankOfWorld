@@ -2,11 +2,13 @@ package Entity;
 
 import java.awt.*;
 
+import Main.Game;
+
 public abstract class Entity {
     private int x;
     private int y;
-    private int width = 1;
-    private int height = 1;
+    private int width = Game.BLOCK_SIZE;
+    private int height = Game.BLOCK_SIZE;
 
     public Entity(int x, int y) {
         this.x = x;
@@ -39,22 +41,16 @@ public abstract class Entity {
         this.y = y;
     }
 
-    public boolean checkOverlap(int buttomLeftX1, int buttomLeftY1, int topRigtX1, int topRigtY1, int buttomLeftX2,
-            int buttomLeftY2, int topRigtX2, int topRigtY2) {
-        if (topRigtY1 < buttomLeftY2
-                || buttomLeftY1 > topRigtY2) {
-            return false;
-        }
-        if (topRigtX1 < buttomLeftX2
-                || buttomLeftX1 > topRigtX2) {
-            return false;
-        }
-        return true;
-    }
+    public void onHit() {
+        System.out.println("Hit! Detected!");
+    };
 
     public boolean isHit(Entity another) {
-        return checkOverlap(x, y, x + width, y + height, another.getX(), another.getY(),
-                another.getX() + another.getWidth(), another.getY() + another.getHeight());
+        return (getX() < another.getX() + another.getWidth()
+                && getX() + getWidth() > another.getX()
+                && getY() < another.getY() + another.getHeight()
+                && getY() + getHeight() > getY());
+
     }
 
     public void animate() {
