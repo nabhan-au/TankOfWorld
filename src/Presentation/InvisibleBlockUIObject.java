@@ -1,21 +1,27 @@
 package Presentation;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
 
-import Entity.EntityList.InvisibleBlock;
+import Entity.Entity;
 
-public class InvisibleBlockUIObject implements UIObject {
-    private InvisibleBlock invisibleBlock;
+public class InvisibleBlockUIObject extends UIObject {
 
-    public InvisibleBlockUIObject(InvisibleBlock invisibleBlock) {
-        this.invisibleBlock = invisibleBlock;
+    public InvisibleBlockUIObject(Entity invisibleBlock) {
+        super(invisibleBlock);
     }
 
     @Override
     public void paint(Graphics g) {
         g.setColor(Color.RED);
-        g.fillRect(invisibleBlock.getX(), invisibleBlock.getY(),
-                invisibleBlock.getWidth(), invisibleBlock.getHeight());
+        g.fillRect(this.getEntity().getX(), this.getEntity().getY(),
+                this.getEntity().getWidth(), this.getEntity().getHeight());
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // TODO Auto-generated method stub
+
     }
 
 }
