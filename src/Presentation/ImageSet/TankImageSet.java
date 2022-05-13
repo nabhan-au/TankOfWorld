@@ -37,7 +37,8 @@ public class TankImageSet extends ImageSet {
     }
 
     public static enum TankImage {
-        A;
+        A,
+        B;
     }
 
     public static TankImageSet getTankImageSet(TankImage tankImageNo) {
@@ -49,6 +50,13 @@ public class TankImageSet extends ImageSet {
                         .left("assets/imgs/tank/tank_a_left.png")
                         .right("assets/imgs/tank/tank_a_right.png")
                         .down("assets/imgs/tank/tank_a_down.png");
+                return tankImageBuilder.build();
+            case B:
+                tankImageBuilder
+                        .up("assets/imgs/tank/tank_b_up.png")
+                        .left("assets/imgs/tank/tank_b_left.png")
+                        .right("assets/imgs/tank/tank_b_right.png")
+                        .down("assets/imgs/tank/tank_b_down.png");
                 return tankImageBuilder.build();
             default:
                 throw new Error("Unknown Tank Number.");
