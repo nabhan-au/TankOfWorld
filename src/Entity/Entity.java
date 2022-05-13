@@ -62,7 +62,7 @@ public abstract class Entity {
 
     }
 
-    public boolean canHit() {
+    public boolean canCollision() {
         return false;
     }
 

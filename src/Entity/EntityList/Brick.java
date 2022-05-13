@@ -13,4 +13,9 @@ public class Brick extends Entity {
         super.onHit();
         this.flagToBeRemove();
     }
+
+    @Override
+    public boolean canCollision() {
+        return true;
+    }
 }
