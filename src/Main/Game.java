@@ -57,7 +57,7 @@ public class Game extends JFrame implements PropertyChangeListener {
                 while (!gameOver) {
                     map.tick();
                     try {
-                        sleep(1000/300);
+                        sleep(1000 / 300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -122,7 +122,7 @@ public class Game extends JFrame implements PropertyChangeListener {
                     KeyEvent.VK_D,
                     KeyEvent.VK_W,
                     KeyEvent.VK_S,
-                    KeyEvent.VK_SPACE));
+                    KeyEvent.VK_CONTROL));
         }
 
         @Override
