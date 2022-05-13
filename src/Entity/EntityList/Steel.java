@@ -10,7 +10,7 @@ public class Steel extends Entity {
     }
 
     @Override
-    public boolean canHit() {
+    public boolean canCollision() {
         return true;
     }
 

@@ -17,7 +17,7 @@ public class Tank extends MovingEntity {
     }
 
     @Override
-    public boolean canHit() {
+    public boolean canCollision() {
         return true;
     }
 

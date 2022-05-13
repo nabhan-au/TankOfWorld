@@ -13,4 +13,9 @@ public class InvisibleBlock extends Entity {
         return false;
     }
 
+    @Override
+    public boolean canCollision() {
+        return true;
+    }
+
 }

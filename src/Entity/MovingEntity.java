@@ -39,7 +39,7 @@ public abstract class MovingEntity extends Entity {
     public void checkCollision(List<Entity> blocks) {
         isCollision = false;
         for (Entity block : blocks) {
-            if (!block.canHit()) {
+            if (!block.canCollision()) {
                 continue;
             }
             switch (getDirection()) {
