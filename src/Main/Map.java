@@ -8,7 +8,6 @@ import java.util.Random;
 import Entity.*;
 import Entity.EntityList.*;
 import Entity.EntityList.Tank;
-import Entity.ImageSet.TankImageSet.TankImage;
 
 public class Map {
     private int width;
@@ -28,8 +27,8 @@ public class Map {
         // TODO: Remove these lines
         loadMap("map1.txt");
 
-        Tank tankA = new Tank(40, 40, TankImage.A);
-        Tank tankB = new Tank(40, 40, TankImage.A);
+        Tank tankA = new Tank(40, 40);
+        Tank tankB = new Tank(40, 40);
         tankA.setSize(40, 40);
         tankB.setSize(40, 40);
         tanks.add(tankA);

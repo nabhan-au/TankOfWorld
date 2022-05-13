@@ -3,11 +3,24 @@ package Main;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Entity.*;
-import Entity.ImageSet.BlockImageSet;
-import Entity.ImageSet.ImageSet;
+import Entity.EntityList.Brick;
+import Entity.EntityList.InvisibleBlock;
+import Entity.EntityList.Steel;
+import Entity.EntityList.Tree;
+import Presentation.BrickUIObject;
+import Presentation.InvisibleBlockUIObject;
+import Presentation.SteelUIObject;
+import Presentation.TankUIObject;
+import Presentation.TreeUIObject;
+import Presentation.UIObject;
+import Presentation.ImageSet.BlockImageSet;
+import Presentation.ImageSet.ImageSet;
+import Presentation.ImageSet.TankImageSet;
+import Presentation.ImageSet.TankImageSet.TankImage;
 
 import java.awt.*;
 
@@ -57,11 +70,31 @@ public class Game extends JFrame {
 
     class GamePanal extends JPanel {
         private Map map;
+        private List<UIObject> uiObjects = new ArrayList<UIObject>();
         private ImageSet floorImageSet = BlockImageSet.getBlockImage(BlockImageSet.BlockImage.Floor);
 
         public GamePanal(Map map) {
             super();
             this.map = map;
+            // TODO: Temporary add the Tank Creator in the GamePanal.
+            for (int i = 0; i < 2; i++) {
+                uiObjects.add(new TankUIObject(map.getTank(i), TankImageSet.getTankImageSet(TankImage.A)));
+            }
+
+            // TODO: Temporary generate UIObject based on the type.
+            for (Entity entity : map.getEntities()) {
+
+                if (entity instanceof Brick) {
+                    uiObjects.add(new BrickUIObject((Brick) entity));
+                } else if (entity instanceof Tree) {
+                    uiObjects.add(new TreeUIObject((Tree) entity));
+                } else if (entity instanceof Steel) {
+                    uiObjects.add(new SteelUIObject((Steel) entity));
+                } else if (entity instanceof InvisibleBlock) {
+                    uiObjects.add(new InvisibleBlockUIObject((InvisibleBlock) entity));
+                }
+            }
+
             addKeyListener(new KeyHandler(
                     map.getTank(0),
                     KeyEvent.VK_LEFT,
@@ -83,13 +116,12 @@ public class Game extends JFrame {
         public void paint(Graphics g) {
             super.paint(g);
             paintFloor(g);
-            paintElements(g);
+            paintUIObjects(g);
         }
 
-        public void paintElements(Graphics g) {
-            List<Entity> entities = map.getEntities();
-            for (Entity entity : entities) {
-                entity.paint(g);
+        public void paintUIObjects(Graphics g) {
+            for (UIObject uiObject : this.uiObjects) {
+                uiObject.paint(g);
             }
         }
 
