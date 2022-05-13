@@ -1,9 +1,7 @@
 package Entity;
 
 import Main.Game;
-import Entity.Direction;
 
-import java.io.Console;
 import java.util.List;
 
 public abstract class MovingEntity extends Entity {
@@ -46,7 +44,7 @@ public abstract class MovingEntity extends Entity {
             isCollision = false;
             switch (getDirection()) {
                 case UP:
-                    if ((getY() <= block.getY()+block.getHeight() + 5 && getY() > block.getY()) &&
+                    if ((getY() <= block.getY()+block.getHeight() + 1 && getY() > block.getY()) &&
                         ((getX() <= block.getX() + block.getWidth() && getX() >= block.getX()) ||
                         (getX() + getWidth() >= block.getX()  && getX() <= block.getX()))) {
                         isCollision = true;
@@ -54,7 +52,7 @@ public abstract class MovingEntity extends Entity {
                     }
                     break;
                 case DOWN:
-                    if ((getY() + getHeight() + 5 >= block.getY() && getY() < block.getY()) &&
+                    if ((getY() + getHeight() + 1 >= block.getY() && getY() < block.getY()) &&
                         ((getX() <= block.getX() + block.getWidth() && getX() >= block.getX()) ||
                         (getX() + getWidth() >= block.getX()  && getX() <= block.getX()))) {
                         isCollision = true;
@@ -62,15 +60,15 @@ public abstract class MovingEntity extends Entity {
                     }
                     break;
                 case LEFT:
-                    if ((getX() <= block.getX()+block.getWidth() + 5 && getX() > block.getX()) &&
+                    if ((getX() <= block.getX()+block.getWidth() + 1 && getX() > block.getX()) &&
                         ((getY() <= block.getY() + block.getHeight() && getY() >= block.getY()) ||
-                        (getY() + getHeight() > block.getY()  && getY() < block.getY()))) {
+                        (getY() + getHeight() >= block.getY()  && getY() <= block.getY()))) {
                         isCollision = true;
                         return;
                     }
                     break;
                 case RIGHT:
-                    if ((getX() + getWidth() + 5 >= block.getX() && getX() < block.getX()) &&
+                    if ((getX() + getWidth() + 1 >= block.getX() && getX() < block.getX()) &&
                         ((getY() <= block.getY() + block.getHeight() && getY() >= block.getY()) ||
                         (getY() + getHeight() >= block.getY()  && getY() <= block.getY()))) {
                         isCollision = true;
@@ -83,7 +81,6 @@ public abstract class MovingEntity extends Entity {
 
     @Override
     public void animate() {
-        System.out.println(isCollision);
         if (!isMoving || isCollision) {
             return;
         }

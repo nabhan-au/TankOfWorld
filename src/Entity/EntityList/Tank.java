@@ -10,7 +10,7 @@ public class Tank extends MovingEntity {
     private List<Bullet> bullets = new ArrayList<Bullet>();
 
     public Tank(int x, int y) {
-        super(x, y, 5);
+        super(x, y, 1);
         this.setDirection(Direction.UP);
     }
 

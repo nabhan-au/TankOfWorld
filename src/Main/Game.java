@@ -53,7 +53,7 @@ public class Game extends JFrame {
                 while (true) {
                     map.tick();
                     try {
-                        sleep(1000 / 60);
+                        sleep(1000 / 300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

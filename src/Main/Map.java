@@ -40,14 +40,14 @@ public class Map {
 
     public void tick() {
         for (Tank tank : tanks) {
+            System.out.println("X: " + tank.getX() + " Y: " + tank.getY());
             List<Entity> hitList = tank.isBulletHit(entities);
+            tank.checkCollision(entities);
             if (hitList.size() >= 1) {
                 System.out.println(hitList);
                 System.out.println("X: " + hitList.get(0).getX() + " Y: " + hitList.get(0).getY());
 
             }
-            tank.checkCollision(entities);
-
         }
         for (Entity entity : entities) {
             entity.animate();
