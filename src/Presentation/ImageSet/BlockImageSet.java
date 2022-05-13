@@ -1,10 +1,10 @@
-package Entity.ImageSet;
+package Presentation.ImageSet;
 
 import Entity.Direction;
 
 import java.awt.*;
 
-public class BlockImageSet extends ImageSet{
+public class BlockImageSet extends ImageSet {
     /**
      * This is a class containing the set of image for a tank
      *
@@ -14,7 +14,7 @@ public class BlockImageSet extends ImageSet{
         super(imageSetBuilder);
     }
 
-    public static class  BlockImageSetBuilder extends ImageSetBuilder {
+    public static class BlockImageSetBuilder extends ImageSetBuilder {
 
         @Override
         public BlockImageSet build() {

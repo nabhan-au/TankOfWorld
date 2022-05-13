@@ -1,4 +1,4 @@
-package Entity.ImageSet;
+package Presentation.ImageSet;
 
 import java.awt.Image;
 
