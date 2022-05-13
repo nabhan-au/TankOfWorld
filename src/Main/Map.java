@@ -37,8 +37,14 @@ public class Map {
     }
 
     public void tick() {
-        for (Entity entity : entities) {
-            entity.animate();
+        for (int i = entities.size() - 1; i > -1; i--) {
+            Entity entity = entities.get(i);
+            if (entity.getIsRemovable()) {
+                entities.remove(i);
+            } else {
+                entity.animate();
+            }
+
         }
 
         for (Tank tank : tanks) {
