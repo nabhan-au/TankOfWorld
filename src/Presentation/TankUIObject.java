@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Entity.Entity;
-
 import Entity.EntityList.Tank;
 import Entity.Events.TankEvent;
 import Presentation.ImageSet.TankImageSet;
@@ -14,7 +13,7 @@ import Presentation.ImageSet.TankImageSet;
 public class TankUIObject extends UIObject {
     private Tank tank;
     private TankImageSet tankImageSet;
-    private List<BulletUIObject> bulletUIObjects = new ArrayList<BulletUIObject>();
+    private List<UIObject> subUIObjects = new ArrayList<UIObject>();
 
     public TankUIObject(Tank tank, TankImageSet tankImageSet) {
         super(tank);
@@ -29,12 +28,12 @@ public class TankUIObject extends UIObject {
                 tank.getWidth(), tank.getHeight(), null);
 
         // Paint the Bullets.
-        for (int i = bulletUIObjects.size() - 1; i > -1; i--) {
-            BulletUIObject bulletUIObject = bulletUIObjects.get(i);
-            if (bulletUIObject.getIsRemovable()) {
-                bulletUIObjects.remove(i);
+        for (int i = subUIObjects.size() - 1; i > -1; i--) {
+            UIObject uiObject = subUIObjects.get(i);
+            if (uiObject.getIsRemovable()) {
+                subUIObjects.remove(i);
             } else {
-                bulletUIObject.paint(g);
+                uiObject.paint(g);
             }
 
         }
@@ -43,7 +42,12 @@ public class TankUIObject extends UIObject {
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         if (event.getPropertyName() == TankEvent.ShootBullet.toString()) {
-            bulletUIObjects.add(new BulletUIObject((Entity) event.getNewValue()));
+            BulletUIObject bulletUIObject = new BulletUIObject((Entity) event.getNewValue());
+            subUIObjects.add(bulletUIObject);
+
+        } else if (event.getPropertyName() == TankEvent.HitTarget.toString()) {
+            ExplosionUIObject explosionUIObject = new ExplosionUIObject((Entity) event.getNewValue());
+            subUIObjects.add(explosionUIObject);
         }
 
         super.propertyChange(event);

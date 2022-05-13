@@ -1,5 +1,6 @@
 package Entity.Events;
 
 public enum TankEvent {
-    ShootBullet
+    ShootBullet,
+    HitTarget
 }
