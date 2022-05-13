@@ -11,6 +11,9 @@ public abstract class UIObject implements PropertyChangeListener {
     private Entity entity;
     private boolean isRemovable = false;
 
+    public UIObject() {
+    }
+
     public UIObject(Entity entity) {
         this.entity = entity;
         entity.addPropertyChangeListener(this);
@@ -24,6 +27,10 @@ public abstract class UIObject implements PropertyChangeListener {
 
     public boolean getIsRemovable() {
         return this.isRemovable;
+    }
+
+    public void flagToBeRemove() {
+        this.isRemovable = true;
     }
 
     @Override
