@@ -7,4 +7,10 @@ public class Brick extends Entity {
         super(x, y);
         setSize(width, height);
     }
+
+    @Override
+    public void onHit() {
+        super.onHit();
+        this.flagToBeRemove();
+    }
 }
