@@ -36,7 +36,7 @@ public abstract class Entity {
         return height;
     }
 
-    public boolean isRemovable() {
+    public boolean getIsRemovable() {
         return this.isRemovable;
     }
 
