@@ -118,8 +118,13 @@ public class Game extends JFrame {
         }
 
         public void paintUIObjects(Graphics g) {
-            for (UIObject uiObject : this.uiObjects) {
-                uiObject.paint(g);
+            for (int i = uiObjects.size() - 1; i > -1; i--) {
+                UIObject uiObject = uiObjects.get(i);
+                if (uiObject.getIsRemovable()) {
+                    uiObjects.remove(i);
+                } else {
+                    uiObject.paint(g);
+                }
             }
         }
 
