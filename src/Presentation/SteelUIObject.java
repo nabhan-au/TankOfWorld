@@ -1,7 +1,6 @@
 package Presentation;
 
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
 
 import Entity.Entity;
 import Presentation.ImageSet.BlockImageSet;
@@ -20,11 +19,4 @@ public class SteelUIObject extends UIObject {
         g.drawImage(image, this.getEntity().getX(), this.getEntity().getY(),
                 this.getEntity().getWidth(), this.getEntity().getHeight(), null);
     }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        // TODO Auto-generated method stub
-
-    }
-
 }
