@@ -49,7 +49,7 @@ public abstract class Entity {
         return (getX() < another.getX() + another.getWidth()
                 && getX() + getWidth() > another.getX()
                 && getY() < another.getY() + another.getHeight()
-                && getY() + getHeight() > getY());
+                && getY() + getHeight() > another.getY());
 
     }
 

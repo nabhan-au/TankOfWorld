@@ -61,8 +61,6 @@ public class Tank extends MovingEntity {
         for (int i = bullets.size() - 1; i > -1; i--) {
             for (Entity entity : entities) {
                 if (bullets.get(i).isHit(entity)) {
-                    System.out.println("Bullet X: " + bullets.get(i).getX() + " Y: " + bullets.get(i).getY());
-
                     entity.onHit();
                     bulletPool.returnBullet(bullets.get(i));
                     bullets.remove(i);
