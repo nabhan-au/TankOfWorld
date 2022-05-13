@@ -37,40 +37,44 @@ public abstract class MovingEntity extends Entity {
     }
 
     public void checkCollision(List<Entity> blocks) {
+        isCollision = false;
         for (Entity block : blocks) {
             if (!block.canHit()) {
                 continue;
             }
-            isCollision = false;
             switch (getDirection()) {
                 case UP:
-                    if ((getY() <= block.getY()+block.getHeight() + 1 && getY() > block.getY()) &&
-                        ((getX() <= block.getX() + block.getWidth() && getX() >= block.getX()) ||
-                        (getX() + getWidth() >= block.getX()  && getX() <= block.getX()))) {
+                    if ((getY() <= block.getY()+block.getHeight() && getY() > block.getY()) &&
+                        ((getX() < block.getX() + block.getWidth() && getX() > block.getX()) ||
+                        (getX() + getWidth() > block.getX()  && getX() < block.getX()) ||
+                        (getX() + getWidth()/2 > block.getX() && getX() + getWidth()/2 < block.getX() + block.getWidth()))) {
                         isCollision = true;
                         return;   
                     }
                     break;
                 case DOWN:
-                    if ((getY() + getHeight() + 1 >= block.getY() && getY() < block.getY()) &&
-                        ((getX() <= block.getX() + block.getWidth() && getX() >= block.getX()) ||
-                        (getX() + getWidth() >= block.getX()  && getX() <= block.getX()))) {
+                    if ((getY() + getHeight() >= block.getY() && getY() < block.getY()) &&
+                        ((getX() < block.getX() + block.getWidth() && getX() > block.getX()) ||
+                        (getX() + getWidth() > block.getX()  && getX() < block.getX()) ||
+                        (getX() + getWidth()/2 > block.getX() && getX() + getWidth()/2 < block.getX() + block.getWidth()))) {
                         isCollision = true;
                         return;
                     }
                     break;
                 case LEFT:
-                    if ((getX() <= block.getX()+block.getWidth() + 1 && getX() > block.getX()) &&
-                        ((getY() <= block.getY() + block.getHeight() && getY() >= block.getY()) ||
-                        (getY() + getHeight() >= block.getY()  && getY() <= block.getY()))) {
+                    if ((getX() <= block.getX()+block.getWidth() && getX() > block.getX()) &&
+                        ((getY() < block.getY() + block.getHeight() && getY() > block.getY()) ||
+                        (getY() + getHeight() > block.getY()  && getY() < block.getY()) ||
+                        (getY() + getHeight()/2 > block.getY() && getY() + getHeight()/2 < block.getY() + block.getHeight()))) {
                         isCollision = true;
                         return;
                     }
                     break;
                 case RIGHT:
-                    if ((getX() + getWidth() + 1 >= block.getX() && getX() < block.getX()) &&
-                        ((getY() <= block.getY() + block.getHeight() && getY() >= block.getY()) ||
-                        (getY() + getHeight() >= block.getY()  && getY() <= block.getY()))) {
+                    if ((getX() + getWidth() >= block.getX() && getX() < block.getX()) &&
+                        ((getY() < block.getY() + block.getHeight() && getY() > block.getY()) ||
+                        (getY() + getHeight() > block.getY()  && getY() < block.getY()) ||
+                        (getY() + getHeight()/2 > block.getY() && getY() + getHeight()/2 < block.getY() + block.getHeight()))) {
                         isCollision = true;
                         return;
                     }
@@ -86,11 +90,10 @@ public abstract class MovingEntity extends Entity {
         }
         int newX = this.getX() + (speed * direction.getX());
         int newY = this.getY() + (speed * direction.getY());
-
-        if (newX < 0
-                || newX + this.getWidth() > Game.BOARD_SIZE
-                || newY < 0
-                || newY + this.getHeight() > Game.BOARD_SIZE) {
+        if (newX < -50
+                || newX + this.getWidth() > Game.BOARD_SIZE + 50
+                || newY < -50
+                || newY + this.getHeight() > Game.BOARD_SIZE + 50) {
             this.stop();
             return;
         }

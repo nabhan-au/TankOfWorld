@@ -21,8 +21,8 @@ public class BulletPool {
     }
 
     public void returnBullet(Bullet bullet) {
-        bullet.setPosition(-1, -1);
         bullet.stop();
+        bullet.setPosition(-50, -50);
         this.bulletPool.add(bullet);
     }
 

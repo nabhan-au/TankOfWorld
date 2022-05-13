@@ -3,7 +3,6 @@ package Main;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import Entity.*;
 import Entity.EntityList.*;
@@ -14,7 +13,6 @@ public class Map {
     private int height;
     private int mapTile[][];
     private static int tileSize = 40;
-    private Random random = new Random();
     private List<Tank> tanks = new ArrayList<Tank>();
     // This is for the GUI Object to render each entity easily.
     private List<Entity> entities = new ArrayList<Entity>();
@@ -39,18 +37,25 @@ public class Map {
     }
 
     public void tick() {
+        for (int i = entities.size() - 1; i > -1; i--) {
+            Entity entity = entities.get(i);
+            if (entity.getIsRemovable()) {
+                entities.remove(i);
+            } else {
+                if (entity instanceof MovingEntity) {
+                    ((MovingEntity)entity).checkCollision(entities);
+                }
+                entity.animate();
+            }
+        }
+
         for (Tank tank : tanks) {
-            System.out.println("X: " + tank.getX() + " Y: " + tank.getY());
             List<Entity> hitList = tank.isBulletHit(entities);
-            tank.checkCollision(entities);
             if (hitList.size() >= 1) {
                 System.out.println(hitList);
                 System.out.println("X: " + hitList.get(0).getX() + " Y: " + hitList.get(0).getY());
 
             }
-        }
-        for (Entity entity : entities) {
-            entity.animate();
         }
     }
 

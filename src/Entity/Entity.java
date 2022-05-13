@@ -2,11 +2,18 @@ package Entity;
 
 import Main.Game;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+import Entity.Events.DomainEvent;
+
 public abstract class Entity {
     private int x;
     private int y;
     private int width = Game.BLOCK_SIZE;
     private int height = Game.BLOCK_SIZE;
+    private PropertyChangeSupport changes = new PropertyChangeSupport(this);
+    private boolean isRemovable = false;
 
     public Entity(int x, int y) {
         this.x = x;
@@ -27,6 +34,10 @@ public abstract class Entity {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean getIsRemovable() {
+        return this.isRemovable;
     }
 
     public void setSize(int width, int height) {
@@ -57,4 +68,22 @@ public abstract class Entity {
 
     public void animate() {
     }
+
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        changes.addPropertyChangeListener(l);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        changes.removePropertyChangeListener(l);
+    }
+
+    public PropertyChangeSupport getPropertyChangeSupport() {
+        return this.changes;
+    }
+
+    public void flagToBeRemove() {
+        this.changes.firePropertyChange(DomainEvent.FlagAsToBeRemove.toString(), false, true);
+        this.isRemovable = true;
+    }
+
 }

@@ -2,19 +2,18 @@ package Presentation;
 
 import java.awt.*;
 
-import Entity.EntityList.Bullet;
+import Entity.Entity;
 
-public class BulletUIObject implements UIObject {
-    private Bullet bullet;
+public class BulletUIObject extends UIObject {
 
-    public BulletUIObject(Bullet bullet) {
-        this.bullet = bullet;
+    public BulletUIObject(Entity bullet) {
+        super(bullet);
     }
 
     @Override
     public void paint(Graphics g) {
         g.setColor(Color.black);
-        g.fillOval(bullet.getX(), bullet.getY(), 10, 10);
+        g.fillOval(this.getEntity().getX(), this.getEntity().getY(), 10, 10);
     }
 
 }

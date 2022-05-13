@@ -3,6 +3,8 @@ package Entity.EntityList;
 import Entity.Direction;
 import Entity.Entity;
 import Entity.MovingEntity;
+import Entity.Events.TankEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class Tank extends MovingEntity {
                 break;
 
         }
-
+        this.getPropertyChangeSupport().firePropertyChange(TankEvent.ShootBullet.toString(), null, bullet);
         bullet.setPosition(posX, posY);
         bullet.setDirection(this.getDirection());
         bullet.move();
@@ -62,8 +64,10 @@ public class Tank extends MovingEntity {
         for (int i = bullets.size() - 1; i > -1; i--) {
             for (Entity entity : entities) {
                 if (bullets.get(i).isHit(entity)) {
+                    Bullet bullet = bullets.get(i);
                     entity.onHit();
-                    bulletPool.returnBullet(bullets.get(i));
+                    bullet.flagToBeRemove();
+                    bulletPool.returnBullet(bullet);
                     bullets.remove(i);
                     hittedEntity.add(entity);
                     break;
@@ -72,6 +76,7 @@ public class Tank extends MovingEntity {
         }
         return hittedEntity;
     }
+
 
     @Override
     public void animate() {

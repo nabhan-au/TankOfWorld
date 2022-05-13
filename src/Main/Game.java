@@ -12,6 +12,7 @@ import Entity.EntityList.InvisibleBlock;
 import Entity.EntityList.Steel;
 import Entity.EntityList.Tree;
 import Presentation.BrickUIObject;
+import Presentation.ExplosionUIObject;
 import Presentation.InvisibleBlockUIObject;
 import Presentation.SteelUIObject;
 import Presentation.TankUIObject;
@@ -53,7 +54,7 @@ public class Game extends JFrame {
                 while (true) {
                     map.tick();
                     try {
-                        sleep(1000 / 300);
+                        sleep(1000/300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -69,13 +70,11 @@ public class Game extends JFrame {
     }
 
     class GamePanal extends JPanel {
-        private Map map;
         private List<UIObject> uiObjects = new ArrayList<UIObject>();
         private ImageSet floorImageSet = BlockImageSet.getBlockImage(BlockImageSet.BlockImage.Floor);
 
         public GamePanal(Map map) {
             super();
-            this.map = map;
             // TODO: Temporary add the Tank Creator in the GamePanal.
             for (int i = 0; i < 2; i++) {
                 uiObjects.add(new TankUIObject(map.getTank(i), TankImageSet.getTankImageSet(TankImage.A)));
@@ -85,13 +84,13 @@ public class Game extends JFrame {
             for (Entity entity : map.getEntities()) {
 
                 if (entity instanceof Brick) {
-                    uiObjects.add(new BrickUIObject((Brick) entity));
+                    uiObjects.add(new BrickUIObject(entity));
                 } else if (entity instanceof Tree) {
-                    uiObjects.add(new TreeUIObject((Tree) entity));
+                    uiObjects.add(new TreeUIObject(entity));
                 } else if (entity instanceof Steel) {
-                    uiObjects.add(new SteelUIObject((Steel) entity));
+                    uiObjects.add(new SteelUIObject(entity));
                 } else if (entity instanceof InvisibleBlock) {
-                    uiObjects.add(new InvisibleBlockUIObject((InvisibleBlock) entity));
+                    uiObjects.add(new InvisibleBlockUIObject(entity));
                 }
             }
 
@@ -120,8 +119,16 @@ public class Game extends JFrame {
         }
 
         public void paintUIObjects(Graphics g) {
-            for (UIObject uiObject : this.uiObjects) {
-                uiObject.paint(g);
+            for (int i = uiObjects.size() - 1; i > -1; i--) {
+                UIObject uiObject = uiObjects.get(i);
+                if (uiObject.getIsRemovable()) {
+                    uiObjects.remove(i);
+                    if (uiObject.getEntity() != null) {
+                        uiObjects.add(new ExplosionUIObject(uiObject.getEntity()));
+                    }
+                } else {
+                    uiObject.paint(g);
+                }
             }
         }
 
