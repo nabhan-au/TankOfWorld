@@ -51,6 +51,10 @@ public abstract class Entity {
 
     }
 
+    public boolean canHit() {
+        return false;
+    }
+
     public void animate() {
     }
 }

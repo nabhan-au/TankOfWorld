@@ -14,6 +14,11 @@ public class Tank extends MovingEntity {
         this.setDirection(Direction.UP);
     }
 
+    @Override
+    public boolean canHit() {
+        return true;
+    }
+
     public void shoot() {
         BulletPool bulletPool = BulletPool.getInstance();
         Bullet bullet = bulletPool.borrowBullet();

@@ -39,10 +39,6 @@ public class Map {
     }
 
     public void tick() {
-        for (Entity entity : entities) {
-            entity.animate();
-        }
-
         for (Tank tank : tanks) {
             List<Entity> hitList = tank.isBulletHit(entities);
             if (hitList.size() >= 1) {
@@ -50,7 +46,11 @@ public class Map {
                 System.out.println("X: " + hitList.get(0).getX() + " Y: " + hitList.get(0).getY());
 
             }
+            tank.checkCollision(entities);
 
+        }
+        for (Entity entity : entities) {
+            entity.animate();
         }
     }
 
