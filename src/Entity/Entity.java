@@ -1,7 +1,5 @@
 package Entity;
 
-import java.awt.*;
-
 import Main.Game;
 
 public abstract class Entity {
@@ -55,6 +53,4 @@ public abstract class Entity {
 
     public void animate() {
     }
-
-    abstract public void paint(Graphics g);
 }
