@@ -3,7 +3,7 @@ package Presentation;
 import java.awt.*;
 
 import Entity.EntityList.Tank;
-import Entity.ImageSet.TankImageSet;
+import Presentation.ImageSet.TankImageSet;
 
 public class TankUIObject implements UIObject {
     private Tank tank;
