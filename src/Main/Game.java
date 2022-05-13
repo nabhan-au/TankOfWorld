@@ -90,9 +90,8 @@ public class Game extends JFrame implements PropertyChangeListener {
         public GamePanal(Map map) {
             super();
             // TODO: Temporary add the Tank Creator in the GamePanal.
-            for (int i = 0; i < 2; i++) {
-                uiObjects.add(new TankUIObject(map.getTank(i), TankImageSet.getTankImageSet(TankImage.A)));
-            }
+            uiObjects.add(new TankUIObject(map.getTank(0), TankImageSet.getTankImageSet(TankImage.A)));
+            uiObjects.add(new TankUIObject(map.getTank(1), TankImageSet.getTankImageSet(TankImage.B)));
 
             // TODO: Temporary generate UIObject based on the type.
             for (Entity entity : map.getEntities()) {
@@ -114,7 +113,7 @@ public class Game extends JFrame implements PropertyChangeListener {
                     KeyEvent.VK_RIGHT,
                     KeyEvent.VK_UP,
                     KeyEvent.VK_DOWN,
-                    KeyEvent.VK_SPACE));
+                    KeyEvent.VK_CONTROL));
 
             addKeyListener(new KeyHandler(
                     map.getTank(1),
@@ -122,7 +121,7 @@ public class Game extends JFrame implements PropertyChangeListener {
                     KeyEvent.VK_D,
                     KeyEvent.VK_W,
                     KeyEvent.VK_S,
-                    KeyEvent.VK_CONTROL));
+                    KeyEvent.VK_SPACE));
         }
 
         @Override
