@@ -9,13 +9,20 @@ import Presentation.ImageSet.ExplosionEffectImageSet;
 
 public class ExplosionUIObject extends UIObject {
     private Iterator<Image> explosionEffectImages;
-    private Entity oldEntity;
     private Thread delayThread;
     private Image explosionImage;
+    private int x;
+    private int y;
+    private int width;
+    private int height;
 
     public ExplosionUIObject(Entity oldEntity) {
         super();
-        this.oldEntity = oldEntity;
+        this.x = oldEntity.getX();
+        this.y = oldEntity.getY();
+        this.width = oldEntity.getWidth();
+        this.height = oldEntity.getHeight();
+
         ExplosionEffectImageSet explosionEffectImageSet = ExplosionEffectImageSet.getInstance();
         explosionEffectImages = explosionEffectImageSet.getBombEffectIterator();
         delayThread = new Thread() {
@@ -40,8 +47,8 @@ public class ExplosionUIObject extends UIObject {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(explosionImage, oldEntity.getX(), oldEntity.getY(),
-                oldEntity.getWidth(), oldEntity.getHeight(), null);
+        g.drawImage(explosionImage, x, y,
+                width, height, null);
 
     }
 

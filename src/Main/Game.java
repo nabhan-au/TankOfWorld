@@ -13,7 +13,6 @@ import Entity.EntityList.Steel;
 import Entity.EntityList.Tree;
 import Entity.Events.DomainEvent;
 import Presentation.BrickUIObject;
-import Presentation.ExplosionUIObject;
 import Presentation.InvisibleBlockUIObject;
 import Presentation.SteelUIObject;
 import Presentation.TankUIObject;
@@ -138,9 +137,6 @@ public class Game extends JFrame implements PropertyChangeListener {
                 UIObject uiObject = uiObjects.get(i);
                 if (uiObject.getIsRemovable()) {
                     uiObjects.remove(i);
-                    if (uiObject.getEntity() != null) {
-                        uiObjects.add(new ExplosionUIObject(uiObject.getEntity()));
-                    }
                 } else {
                     uiObject.paint(g);
                 }
