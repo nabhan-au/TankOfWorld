@@ -3,7 +3,6 @@ package Main;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import Entity.*;
 import Entity.EntityList.*;
@@ -14,7 +13,6 @@ public class Map {
     private int height;
     private int mapTile[][];
     private static int tileSize = 40;
-    private Random random = new Random();
     private List<Tank> tanks = new ArrayList<Tank>();
     // This is for the GUI Object to render each entity easily.
     private List<Entity> entities = new ArrayList<Entity>();
