@@ -86,4 +86,8 @@ public abstract class Entity {
         this.isRemovable = true;
     }
 
+    public void gameOver() {
+        this.changes.firePropertyChange(DomainEvent.GameOver.toString(), false, true);
+    }
+
 }

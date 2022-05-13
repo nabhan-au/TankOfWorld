@@ -11,6 +11,7 @@ import Entity.EntityList.Brick;
 import Entity.EntityList.InvisibleBlock;
 import Entity.EntityList.Steel;
 import Entity.EntityList.Tree;
+import Entity.Events.DomainEvent;
 import Presentation.BrickUIObject;
 import Presentation.ExplosionUIObject;
 import Presentation.InvisibleBlockUIObject;
@@ -26,16 +27,19 @@ import Presentation.ImageSet.TankImageSet.TankImage;
 import java.awt.*;
 
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class Game extends JFrame {
+public class Game extends JFrame implements PropertyChangeListener {
     private Map map;
     public static int BOARD_SIZE = 1000;
     public static int BLOCK_SIZE = 40;
     private Thread gameThread;
     private GamePanal gamePanal;
+    private Boolean gameOver = false;
 
     public Game() {
-        this.map = new Map(BOARD_SIZE, BOARD_SIZE, 2);
+        this.map = new Map(BOARD_SIZE, BOARD_SIZE, 2, this);
         setAlwaysOnTop(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(BOARD_SIZE, BOARD_SIZE));
@@ -51,7 +55,7 @@ public class Game extends JFrame {
         setVisible(true);
         gameThread = new Thread() {
             public void run() {
-                while (true) {
+                while (!gameOver) {
                     map.tick();
                     try {
                         sleep(1000/300);
@@ -67,6 +71,17 @@ public class Game extends JFrame {
 
     public Map getMap() {
         return map;
+    }
+
+    public void gameOver() {
+        gameOver = true;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent event) {
+        if (event.getPropertyName() == DomainEvent.GameOver.toString()) {
+            this.gameOver = true;
+        }
     }
 
     class GamePanal extends JPanel {

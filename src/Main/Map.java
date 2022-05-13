@@ -17,7 +17,7 @@ public class Map {
     // This is for the GUI Object to render each entity easily.
     private List<Entity> entities = new ArrayList<Entity>();
 
-    public Map(int width, int height, int numPlayer) {
+    public Map(int width, int height, int numPlayer, Game game) {
         this.width = width;
         this.height = height;
 
@@ -27,6 +27,8 @@ public class Map {
 
         Tank tankA = new Tank(40, 40);
         Tank tankB = new Tank(40, 40);
+        tankA.addPropertyChangeListener(game);
+        tankB.addPropertyChangeListener(game);
         tankA.setSize(40, 40);
         tankB.setSize(40, 40);
         tanks.add(tankA);

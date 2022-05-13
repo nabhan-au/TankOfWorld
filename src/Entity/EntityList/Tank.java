@@ -21,6 +21,12 @@ public class Tank extends MovingEntity {
         return true;
     }
 
+    @Override
+    public void onHit() {
+        super.onHit();
+        this.gameOver();
+    }
+
     public void shoot() {
         BulletPool bulletPool = BulletPool.getInstance();
         Bullet bullet = bulletPool.borrowBullet();
