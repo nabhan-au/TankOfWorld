@@ -7,6 +7,7 @@ public class Bullet extends MovingEntity {
 
     public Bullet() {
         super(-1, -1, BULLET_SPEED);
+        this.setSize(1, 1);
     }
 
     public Bullet(int x, int y) {
