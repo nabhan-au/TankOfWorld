@@ -15,7 +15,8 @@ public class GameLayer extends JPanel {
 
     public GameLayer() {
         setOpaque(false);
-        this.setBounds(0, 0, Game.BOARD_SIZE + Game.BLOCK_SIZE, Game.BOARD_SIZE + Game.BLOCK_SIZE);
+        this.setBounds(0, GameInfoLayer.GAME_INFO_PANAL_SIZE, Game.BOARD_SIZE + Game.BLOCK_SIZE,
+                Game.BOARD_SIZE + Game.BLOCK_SIZE);
     }
 
     @Override

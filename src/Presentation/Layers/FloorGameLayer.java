@@ -14,7 +14,7 @@ public class FloorGameLayer extends JPanel {
 
     public FloorGameLayer() {
         setOpaque(false);
-        setBounds(0, 0, Game.BOARD_SIZE, Game.BOARD_SIZE);
+        setBounds(0, GameInfoLayer.GAME_INFO_PANAL_SIZE, Game.BOARD_SIZE, Game.BOARD_SIZE);
     }
 
     @Override
