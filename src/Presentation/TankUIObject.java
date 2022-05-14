@@ -24,10 +24,11 @@ public class TankUIObject extends UIObject {
     @Override
     public void paint(Graphics g) {
         Image image = tankImageSet.getImage(tank.getDirection());
+
         g.drawImage(image, tank.getX(), tank.getY(),
                 tank.getWidth(), tank.getHeight(), null);
 
-        // Paint the Bullets.
+        // Paint the Bullets & Explosion Effect.
         for (int i = subUIObjects.size() - 1; i > -1; i--) {
             UIObject uiObject = subUIObjects.get(i);
             if (uiObject.getIsRemovable()) {
@@ -35,8 +36,8 @@ public class TankUIObject extends UIObject {
             } else {
                 uiObject.paint(g);
             }
-
         }
+
     }
 
     @Override

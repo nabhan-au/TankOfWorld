@@ -26,7 +26,7 @@ public class Map {
         loadMap("map1.txt");
 
         Tank tankA = new Tank(40, 40);
-        Tank tankB = new Tank(40, 40);
+        Tank tankB = new Tank(500, 500);
         tankA.addPropertyChangeListener(game);
         tankB.addPropertyChangeListener(game);
         tankA.setSize(40, 40);
@@ -45,7 +45,7 @@ public class Map {
                 entities.remove(i);
             } else {
                 if (entity instanceof MovingEntity) {
-                    ((MovingEntity)entity).checkCollision(entities);
+                    ((MovingEntity) entity).checkCollision(entities);
                 }
                 entity.animate();
             }
