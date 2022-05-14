@@ -73,13 +73,14 @@ public class Game extends JFrame implements PropertyChangeListener {
     }
 
     public void gameOver() {
-        gameOver = true;
+        // TODO: Uncomment this line after testing complete
+        // gameOver = true;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         if (event.getPropertyName() == DomainEvent.GameOver.toString()) {
-            this.gameOver = true;
+            this.gameOver();
         }
     }
 
