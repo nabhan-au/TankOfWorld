@@ -3,12 +3,10 @@ package Main.GameState;
 import Main.Game;
 import Presentation.Layers.GameLayer;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -36,9 +34,8 @@ public class Menu extends State {
 
     class MenuLayer extends JPanel {
         Font font;
-        JLabel title, imageLabel;
+        JLabel title;
         JButton single, multi, exit;
-        BufferedImage titleImage;
 
 
         public MenuLayer() {
