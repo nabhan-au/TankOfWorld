@@ -3,6 +3,7 @@ package Main;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import Entity.EntityList.InvisibleBlock;
 import Entity.EntityList.Steel;
 import Entity.EntityList.Tree;
 import Entity.Events.DomainEvent;
+import Main.GameState.Menu;
 import Main.GameState.State;
 import Main.GameState.TwoPlayerMode;
 import Presentation.BrickUIObject;
@@ -45,14 +47,14 @@ public class Game extends JFrame implements PropertyChangeListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(BOARD_SIZE, BOARD_SIZE));
         this.gamePanal = new GamePanal(map);
-        this.state = new TwoPlayerMode(this, map, BOARD_SIZE, BLOCK_SIZE);
+        this.state = new TwoPlayerMode(this);
         add(gamePanal);
         pack();
         gamePanal.requestFocus();
     }
 
-    public void addKeyListener(KeyHandler keyHandler) {
-        gamePanal.addKeyListener(keyHandler);
+    public void addKeyListener(KeyAdapter keyAdapter) {
+        gamePanal.addKeyListener(keyAdapter);
     }
 
     public void start() {
@@ -75,6 +77,14 @@ public class Game extends JFrame implements PropertyChangeListener {
 
     public Map getMap() {
         return map;
+    }
+
+    public int getBoardSize() {
+        return BOARD_SIZE;
+    }
+
+    public int getBlockSize() {
+        return BLOCK_SIZE;
     }
 
     public void gameOver() {

@@ -20,10 +20,15 @@ public class TwoPlayerMode  extends State{
     private ImageSet floorImageSet = BlockImageSet.getBlockImage(BlockImageSet.BlockImage.Floor);
     private int boardSize;
     private int blockSize;
+    private Map map;
+    private Game stateOwner;
 
-    public TwoPlayerMode(Game StateOwner, Map map, int boardSize, int blockSize) {
-        this.boardSize = boardSize;
-        this.blockSize = blockSize;
+    public TwoPlayerMode(Game stateOwner) {
+        this.stateOwner = stateOwner;
+        this.map = stateOwner.getMap();
+        this.boardSize = stateOwner.getBoardSize();
+        this.blockSize = stateOwner.getBlockSize();
+
         for (int i = 0; i < 2; i++) {
             uiObjects.add(new TankUIObject(map.getTank(i), TankImageSet.getTankImageSet(TankImage.A)));
         }
@@ -41,7 +46,7 @@ public class TwoPlayerMode  extends State{
             }
         }
 
-        StateOwner.addKeyListener(new KeyHandler(
+        stateOwner.addKeyListener(new KeyHandler(
                 map.getTank(0),
                 KeyEvent.VK_LEFT,
                 KeyEvent.VK_RIGHT,
@@ -49,7 +54,7 @@ public class TwoPlayerMode  extends State{
                 KeyEvent.VK_DOWN,
                 KeyEvent.VK_SPACE));
 
-        StateOwner.addKeyListener(new KeyHandler(
+        stateOwner.addKeyListener(new KeyHandler(
                 map.getTank(1),
                 KeyEvent.VK_A,
                 KeyEvent.VK_D,
