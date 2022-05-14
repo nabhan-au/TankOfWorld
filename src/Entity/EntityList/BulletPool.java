@@ -5,6 +5,7 @@ import java.util.List;
 
 public class BulletPool {
     public static int INITIAL_BULLET_SIZE = 5;
+    public static int RELOAD_SPEED = 500;
     private List<Bullet> bulletPool = new ArrayList<Bullet>();
     private List<Bullet> reloadingBulletPool = new ArrayList<Bullet>();
     private Thread reloadingThread;
@@ -34,7 +35,7 @@ public class BulletPool {
                 public void run() {
                     while (isReloading) {
                         try {
-                            sleep(2000);
+                            sleep(RELOAD_SPEED);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
