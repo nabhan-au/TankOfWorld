@@ -73,8 +73,8 @@ public class Game extends JFrame implements PropertyChangeListener {
 
         jLayeredPane.add(infoGameLayer);
         jLayeredPane.add(effectGameLayer);
-        jLayeredPane.add(tankGameLayer);
         jLayeredPane.add(blockGameLayer);
+        jLayeredPane.add(tankGameLayer);
         jLayeredPane.add(floorGameLayer);
         pack();
 
