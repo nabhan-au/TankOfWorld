@@ -6,7 +6,7 @@ import Entity.Entity;
 import Entity.MovingEntity;
 
 public class Bullet extends MovingEntity {
-    public static int BULLET_SPEED = 10;
+    public static int BULLET_SPEED = 5;
 
     public Bullet() {
         super(-1, -1, BULLET_SPEED);
