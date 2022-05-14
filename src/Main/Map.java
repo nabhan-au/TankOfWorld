@@ -23,8 +23,8 @@ public class Map {
         // TODO: Generate Entities in the Map here
         loadMap("map1.txt");
 
-        Tank tankA = new Tank(40, 40);
-        Tank tankB = new Tank(500, 500);
+        Tank tankA = new Tank(40, 40, "A");
+        Tank tankB = new Tank(500, 500, "B");
         tankA.addPropertyChangeListener(game);
         tankB.addPropertyChangeListener(game);
         tankA.setSize(40, 40);
@@ -50,12 +50,7 @@ public class Map {
         }
 
         for (Tank tank : tanks) {
-            List<Entity> hitList = tank.isBulletHit(entities);
-            if (hitList.size() >= 1) {
-                System.out.println(hitList);
-                System.out.println("X: " + hitList.get(0).getX() + " Y: " + hitList.get(0).getY());
-
-            }
+            tank.isBulletHit(entities);
         }
     }
 
