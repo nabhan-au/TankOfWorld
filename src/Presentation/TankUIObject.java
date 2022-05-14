@@ -9,6 +9,7 @@ import Entity.Entity;
 import Entity.EntityList.Tank;
 import Entity.Events.TankEvent;
 import Main.Game;
+import Presentation.ImageSet.ImageSet;
 import Presentation.ImageSet.TankImageSet;
 
 public class TankUIObject extends UIObject {
@@ -55,6 +56,14 @@ public class TankUIObject extends UIObject {
         }
 
         super.propertyChange(event);
+    }
+
+    public Tank getTank() {
+        return this.tank;
+    }
+
+    public ImageSet getTankImageSet() {
+        return this.tankImageSet;
     }
 
 }
