@@ -88,6 +88,8 @@ public class Map {
                         entities.add(new Brick(i * tileSize, j * tileSize, tileSize, tileSize));
                     } else if (num == 2) {
                         entities.add(new Steel(i * tileSize, j * tileSize, tileSize, tileSize));
+                    } else if (num == 3) {
+                        entities.add(new Tree(i * tileSize, j * tileSize, tileSize, tileSize));
                     }
                 }
             }
