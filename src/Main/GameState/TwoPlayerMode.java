@@ -1,50 +1,60 @@
 package Main.GameState;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
-
 import Entity.Entity;
 import Entity.EntityList.*;
 import Main.Game;
 import Main.KeyHandler;
 import Main.Map;
 import Presentation.*;
-import Presentation.UIObject;
+import Presentation.Layers.FloorGameLayer;
+import Presentation.Layers.GameInfoLayer;
+import Presentation.Layers.GameLayer;
 import Presentation.ImageSet.*;
 import Presentation.ImageSet.TankImageSet.TankImage;
 
+import javax.swing.*;
+
 public class TwoPlayerMode  extends State{
-    private List<UIObject> uiObjects = new ArrayList<UIObject>();
-    private ImageSet floorImageSet = BlockImageSet.getBlockImage(BlockImageSet.BlockImage.Floor);
-    private int boardSize;
-    private int blockSize;
+    private JPanel floorGameLayer = new FloorGameLayer();
+    private GameLayer tankGameLayer = new GameLayer();
+    private GameLayer blockGameLayer = new GameLayer();
+    private GameLayer effectGameLayer = new GameLayer();
+    private GameInfoLayer infoGameLayer = new GameInfoLayer();
     private Map map;
     private Game stateOwner;
+    public static boolean DEBUG = true;
 
     public TwoPlayerMode(Game stateOwner) {
         this.stateOwner = stateOwner;
         this.map = stateOwner.getMap();
-        this.boardSize = stateOwner.getBoardSize();
-        this.blockSize = stateOwner.getBlockSize();
 
-        for (int i = 0; i < 2; i++) {
-            uiObjects.add(new TankUIObject(map.getTank(i), TankImageSet.getTankImageSet(TankImage.A)));
-        }
+        // TODO: Temporary add the Tank Creator in the GamePanal.
+        TankUIObject tankUIObjectA = new TankUIObject(map.getTank(0), TankImageSet.getTankImageSet(TankImage.A), stateOwner);
+        TankUIObject tankUIObjectB = new TankUIObject(map.getTank(1), TankImageSet.getTankImageSet(TankImage.B), stateOwner);
+        tankGameLayer.addUIObject(tankUIObjectA);
+        tankGameLayer.addUIObject(tankUIObjectB);
+        infoGameLayer.addUIObject(new TankInfoUIObject(tankUIObjectA, 10, 10, 40));
+        infoGameLayer.addUIObject(new TankInfoUIObject(tankUIObjectB, 400, 10, 40));
 
+        // Generate the BlockUIObject and add it to blockGameLayer.
         for (Entity entity : map.getEntities()) {
-
             if (entity instanceof Brick) {
-                uiObjects.add(new BrickUIObject(entity));
+                blockGameLayer.addUIObject(new BrickUIObject(entity));
             } else if (entity instanceof Tree) {
-                uiObjects.add(new TreeUIObject(entity));
+                blockGameLayer.addUIObject(new TreeUIObject(entity));
             } else if (entity instanceof Steel) {
-                uiObjects.add(new SteelUIObject(entity));
-            } else if (entity instanceof InvisibleBlock) {
-                uiObjects.add(new InvisibleBlockUIObject(entity));
+                blockGameLayer.addUIObject(new SteelUIObject(entity));
+            } else if (entity instanceof InvisibleBlock && DEBUG) {
+                blockGameLayer.addUIObject(new InvisibleBlockUIObject(entity));
             }
         }
+        stateOwner.removeAllLayer();
+        stateOwner.addLayer(infoGameLayer);
+        stateOwner.addLayer(effectGameLayer);
+        stateOwner.addLayer(tankGameLayer);
+        stateOwner.addLayer(blockGameLayer);
+        stateOwner.addLayer(floorGameLayer);
 
         stateOwner.addKeyListener(new KeyHandler(
                 map.getTank(0),
@@ -52,7 +62,7 @@ public class TwoPlayerMode  extends State{
                 KeyEvent.VK_RIGHT,
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
-                KeyEvent.VK_SPACE));
+                KeyEvent.VK_CONTROL));
 
         stateOwner.addKeyListener(new KeyHandler(
                 map.getTank(1),
@@ -63,28 +73,16 @@ public class TwoPlayerMode  extends State{
                 KeyEvent.VK_SPACE));
     }
 
-    public void paint(Graphics g) {
-        paintFloor(g);
-        paintUIObjects(g);
+    @Override
+    public void repaint() {
+        floorGameLayer.repaint();
+        tankGameLayer.repaint();
+        effectGameLayer.repaint();
+        blockGameLayer.repaint();
     }
 
-    public void paintUIObjects(Graphics g) {
-        for (int i = uiObjects.size() - 1; i > -1; i--) {
-            UIObject uiObject = uiObjects.get(i);
-            if (uiObject.getIsRemovable()) {
-                uiObjects.remove(i);
-            } else {
-                uiObject.paint(g);
-            }
-        }
+    @Override
+    public GameLayer getEffectGameLayer() {
+        return effectGameLayer;
     }
-
-    public void paintFloor(Graphics g) {
-        for (int i = 0; i < boardSize; i += blockSize) {
-            for (int j = 0; j < boardSize; j += blockSize) {
-                g.drawImage(floorImageSet.getUp(), i, j, blockSize, blockSize, null);
-            }
-        }
-    }
-
 }

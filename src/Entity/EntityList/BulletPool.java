@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BulletPool {
-    private static BulletPool bulletPoolInstance;
+    public static int INITIAL_BULLET_SIZE = 5;
+    public static int RELOAD_SPEED = 500;
     private List<Bullet> bulletPool = new ArrayList<Bullet>();
+    private List<Bullet> reloadingBulletPool = new ArrayList<Bullet>();
+    private Thread reloadingThread;
+    private boolean isReloading = false;
 
-    private BulletPool() {
-        for (int i = 0; i < 50; i++) {
+    public BulletPool() {
+        for (int i = 0; i < INITIAL_BULLET_SIZE; i++) {
             bulletPool.add(new Bullet());
         }
+
     }
 
     public Bullet borrowBullet() {
@@ -23,13 +28,43 @@ public class BulletPool {
     public void returnBullet(Bullet bullet) {
         bullet.stop();
         bullet.setPosition(-50, -50);
-        this.bulletPool.add(bullet);
+        this.reloadingBulletPool.add(bullet);
+        if (!isReloading) {
+            isReloading = true;
+            this.reloadingThread = new Thread() {
+                public void run() {
+                    while (isReloading) {
+                        try {
+                            sleep(RELOAD_SPEED);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if (reloadingBulletPool.size() > 0) {
+                            Bullet bullet = reloadingBulletPool.remove(0);
+                            bulletPool.add(bullet);
+                        }
+                        if (reloadingBulletPool.size() == 0) {
+                            // Done Reloading
+                            isReloading = false;
+                        }
+                    }
+                }
+            };
+            this.reloadingThread.start();
+        }
+
     }
 
-    public static BulletPool getInstance() {
-        if (bulletPoolInstance == null) {
-            bulletPoolInstance = new BulletPool();
-        }
-        return bulletPoolInstance;
+    public int getCurrentBullet() {
+        return this.bulletPool.size();
     }
+
+    public int getMaxBullet() {
+        return BulletPool.INITIAL_BULLET_SIZE;
+    }
+
+    public boolean getIsRealoding() {
+        return this.isReloading;
+    }
+
 }

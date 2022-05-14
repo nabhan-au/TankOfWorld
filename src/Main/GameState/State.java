@@ -1,7 +1,8 @@
 package Main.GameState;
 
-import java.awt.*;
+import Presentation.Layers.GameLayer;
 
 public abstract class State {
-    public abstract void paint(Graphics g);
+    public abstract void repaint();
+    public abstract GameLayer getEffectGameLayer();
 }

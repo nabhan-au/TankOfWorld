@@ -11,7 +11,6 @@ import Entity.EntityList.Tank;
 public class Map {
     private int width;
     private int height;
-    private int mapTile[][];
     private static int tileSize = 40;
     private List<Tank> tanks = new ArrayList<Tank>();
     // This is for the GUI Object to render each entity easily.
@@ -21,12 +20,11 @@ public class Map {
         this.width = width;
         this.height = height;
 
-        // TODO: Generate the entities in the Map.
-        // TODO: Remove these lines
+        // TODO: Generate Entities in the Map here
         loadMap("map1.txt");
 
-        Tank tankA = new Tank(40, 40);
-        Tank tankB = new Tank(40, 40);
+        Tank tankA = new Tank(40, 40, "A");
+        Tank tankB = new Tank(500, 500, "B");
         tankA.addPropertyChangeListener(game);
         tankB.addPropertyChangeListener(game);
         tankA.setSize(40, 40);
@@ -45,19 +43,14 @@ public class Map {
                 entities.remove(i);
             } else {
                 if (entity instanceof MovingEntity) {
-                    ((MovingEntity)entity).checkCollision(entities);
+                    ((MovingEntity) entity).checkCollision(entities);
                 }
                 entity.animate();
             }
         }
 
         for (Tank tank : tanks) {
-            List<Entity> hitList = tank.isBulletHit(entities);
-            if (hitList.size() >= 1) {
-                System.out.println(hitList);
-                System.out.println("X: " + hitList.get(0).getX() + " Y: " + hitList.get(0).getY());
-
-            }
+            tank.isBulletHit(entities);
         }
     }
 
@@ -81,7 +74,6 @@ public class Map {
     }
 
     public void loadMap(String map) {
-        mapTile = new int[height / tileSize][width / tileSize];
         try {
             File file = new File(map); // creates a new file instance
             FileReader fr = new FileReader(file);
@@ -108,10 +100,6 @@ public class Map {
 
     public void addEntity(Entity entity) {
         this.entities.add(entity);
-    }
-
-    public int[][] getMapTile() {
-        return mapTile;
     }
 
     public int getWidth() {

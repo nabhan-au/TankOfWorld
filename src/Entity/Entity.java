@@ -51,7 +51,6 @@ public abstract class Entity {
     }
 
     public void onHit() {
-        System.out.println("Hit! Detected!");
     };
 
     public boolean isHit(Entity another) {
