@@ -14,7 +14,7 @@ public class KeyHandler extends KeyAdapter {
     private int shoot;
     private int currentKeyPress;
 
-    protected KeyHandler(Tank tank, int moveLeft, int moveRight, int moveUp, int moveDown, int shoot) {
+    public KeyHandler(Tank tank, int moveLeft, int moveRight, int moveUp, int moveDown, int shoot) {
         this.tank = tank;
         this.moveLeft = moveLeft;
         this.moveRight = moveRight;
