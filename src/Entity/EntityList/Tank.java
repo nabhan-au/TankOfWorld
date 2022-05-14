@@ -89,7 +89,7 @@ public class Tank extends MovingEntity {
 
         for (int i = bullets.size() - 1; i > -1; i--) {
             for (Entity entity : entities) {
-                if (bullets.get(i).isHit(entity)) {
+                if (entity.isHit(bullets.get(i))) {
                     Bullet bullet = bullets.get(i);
                     bullet.flagToBeRemove();
                     this.getPropertyChangeSupport().firePropertyChange(TankEvent.HitTarget.toString(), null, entity);
