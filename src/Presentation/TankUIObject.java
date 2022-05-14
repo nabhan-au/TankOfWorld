@@ -8,15 +8,18 @@ import java.util.List;
 import Entity.Entity;
 import Entity.EntityList.Tank;
 import Entity.Events.TankEvent;
+import Main.Game;
 import Presentation.ImageSet.TankImageSet;
 
 public class TankUIObject extends UIObject {
     private Tank tank;
     private TankImageSet tankImageSet;
+    private Game game;
     private List<UIObject> subUIObjects = new ArrayList<UIObject>();
 
-    public TankUIObject(Tank tank, TankImageSet tankImageSet) {
+    public TankUIObject(Tank tank, TankImageSet tankImageSet, Game game) {
         super(tank);
+        this.game = game;
         this.tank = tank;
         this.tankImageSet = tankImageSet;
     }
@@ -48,7 +51,7 @@ public class TankUIObject extends UIObject {
 
         } else if (event.getPropertyName() == TankEvent.HitTarget.toString()) {
             ExplosionUIObject explosionUIObject = new ExplosionUIObject((Entity) event.getNewValue());
-            subUIObjects.add(explosionUIObject);
+            this.game.getEffectGameLayer().addUIObject(explosionUIObject);
         }
 
         super.propertyChange(event);
