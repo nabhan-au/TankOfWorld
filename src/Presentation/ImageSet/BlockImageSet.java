@@ -47,7 +47,7 @@ public class BlockImageSet extends ImageSet {
                 builder.up("assets/imgs/tile/Block_C_02.png");
                 break;
             case Tree:
-                builder.up("assets/imgs/tile/Ground_Tile_01_C.png");
+                builder.up("assets/imgs/tile/Block_B_02.png");
                 break;
             default:
                 throw new Error("Unknown block");

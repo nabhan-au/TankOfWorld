@@ -83,11 +83,12 @@ public class Map {
                 for (int j = 0; j < width / tileSize; j++) {
                     String[] nums = line.split(" ");
                     int num = Integer.parseInt(nums[j]);
-                    // entities.add(new Floor(i * tileSize, j * tileSize, tileSize, tileSize));
                     if (num == 1) {
                         entities.add(new Brick(i * tileSize, j * tileSize, tileSize, tileSize));
                     } else if (num == 2) {
                         entities.add(new Steel(i * tileSize, j * tileSize, tileSize, tileSize));
+                    } else if (num == 3) {
+                        entities.add(new Tree(i * tileSize, j * tileSize, tileSize, tileSize));
                     }
                 }
             }

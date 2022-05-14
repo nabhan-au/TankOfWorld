@@ -20,8 +20,8 @@ public class TankInfoUIObject extends UIObject {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(tankUIObject.getTankImageSet().getUp(), x, y, size, size, null);
         Tank tank = tankUIObject.getTank();
+        g.drawImage(tankUIObject.getTankImageSet().getImage(tank.getDirection()), x, y, size, size, null);
         String stringToDraw = "Name: " + tank.getTankName() + "\n" +
                 "Ammo: " + tank.getCurrentBullet() + "/" + tank.getMaxBullet();
         if (tank.getIsRealoding()) {

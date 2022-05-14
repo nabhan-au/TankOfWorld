@@ -9,4 +9,9 @@ public class Tree extends Entity {
         setSize(width, height);
     }
 
+    @Override
+    public boolean isHit(Entity another) {
+        return false;
+    }
+
 }

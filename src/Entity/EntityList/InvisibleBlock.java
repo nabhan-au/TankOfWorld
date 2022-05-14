@@ -9,11 +9,6 @@ public class InvisibleBlock extends Entity {
     }
 
     @Override
-    public boolean isHit(Entity another) {
-        return false;
-    }
-
-    @Override
     public boolean canCollision() {
         return true;
     }
