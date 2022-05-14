@@ -12,6 +12,8 @@ import Entity.EntityList.InvisibleBlock;
 import Entity.EntityList.Steel;
 import Entity.EntityList.Tree;
 import Entity.Events.DomainEvent;
+import Main.GameState.State;
+import Main.GameState.TwoPlayerMode;
 import Presentation.BrickUIObject;
 import Presentation.InvisibleBlockUIObject;
 import Presentation.SteelUIObject;
@@ -36,18 +38,21 @@ public class Game extends JFrame implements PropertyChangeListener {
     private Thread gameThread;
     private GamePanal gamePanal;
     private Boolean gameOver = false;
-
+    private State state;
     public Game() {
         this.map = new Map(BOARD_SIZE, BOARD_SIZE, 2, this);
         setAlwaysOnTop(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(BOARD_SIZE, BOARD_SIZE));
-
         this.gamePanal = new GamePanal(map);
+        this.state = new TwoPlayerMode(this, map, BOARD_SIZE, BLOCK_SIZE);
         add(gamePanal);
         pack();
         gamePanal.requestFocus();
+    }
 
+    public void addKeyListener(KeyHandler keyHandler) {
+        gamePanal.addKeyListener(keyHandler);
     }
 
     public void start() {
@@ -84,73 +89,16 @@ public class Game extends JFrame implements PropertyChangeListener {
     }
 
     class GamePanal extends JPanel {
-        private List<UIObject> uiObjects = new ArrayList<UIObject>();
-        private ImageSet floorImageSet = BlockImageSet.getBlockImage(BlockImageSet.BlockImage.Floor);
 
         public GamePanal(Map map) {
             super();
-            // TODO: Temporary add the Tank Creator in the GamePanal.
-            for (int i = 0; i < 2; i++) {
-                uiObjects.add(new TankUIObject(map.getTank(i), TankImageSet.getTankImageSet(TankImage.A)));
-            }
-
-            // TODO: Temporary generate UIObject based on the type.
-            for (Entity entity : map.getEntities()) {
-
-                if (entity instanceof Brick) {
-                    uiObjects.add(new BrickUIObject(entity));
-                } else if (entity instanceof Tree) {
-                    uiObjects.add(new TreeUIObject(entity));
-                } else if (entity instanceof Steel) {
-                    uiObjects.add(new SteelUIObject(entity));
-                } else if (entity instanceof InvisibleBlock) {
-                    uiObjects.add(new InvisibleBlockUIObject(entity));
-                }
-            }
-
-            addKeyListener(new KeyHandler(
-                    map.getTank(0),
-                    KeyEvent.VK_LEFT,
-                    KeyEvent.VK_RIGHT,
-                    KeyEvent.VK_UP,
-                    KeyEvent.VK_DOWN,
-                    KeyEvent.VK_SPACE));
-
-            addKeyListener(new KeyHandler(
-                    map.getTank(1),
-                    KeyEvent.VK_A,
-                    KeyEvent.VK_D,
-                    KeyEvent.VK_W,
-                    KeyEvent.VK_S,
-                    KeyEvent.VK_SPACE));
         }
 
         @Override
         public void paint(Graphics g) {
             super.paint(g);
-            paintFloor(g);
-            paintUIObjects(g);
+            state.paint(g);
         }
-
-        public void paintUIObjects(Graphics g) {
-            for (int i = uiObjects.size() - 1; i > -1; i--) {
-                UIObject uiObject = uiObjects.get(i);
-                if (uiObject.getIsRemovable()) {
-                    uiObjects.remove(i);
-                } else {
-                    uiObject.paint(g);
-                }
-            }
-        }
-
-        public void paintFloor(Graphics g) {
-            for (int i = 0; i < BOARD_SIZE; i += BLOCK_SIZE) {
-                for (int j = 0; j < BOARD_SIZE; j += BLOCK_SIZE) {
-                    g.drawImage(floorImageSet.getUp(), i, j, BLOCK_SIZE, BLOCK_SIZE, null);
-                }
-            }
-        }
-
     }
 
     public static void main(String[] args) throws Exception {
