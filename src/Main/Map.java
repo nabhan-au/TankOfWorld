@@ -11,17 +11,14 @@ import Entity.EntityList.Tank;
 public class Map {
     private int width;
     private int height;
-    private static int tileSize = 40;
     private List<Tank> tanks = new ArrayList<Tank>();
-    // This is for the GUI Object to render each entity easily.
     private List<Entity> entities = new ArrayList<Entity>();
 
     public Map(int width, int height, int numPlayer, Game game) {
         this.width = width;
         this.height = height;
 
-        // TODO: Generate Entities in the Map here
-        loadMap("map1.txt");
+        loadMap("maps/map1.map");
 
         Tank tankA = new Tank(40, 40, "A");
         Tank tankB = new Tank(500, 500, "B");
@@ -78,17 +75,25 @@ public class Map {
             File file = new File(map); // creates a new file instance
             FileReader fr = new FileReader(file);
             BufferedReader buffer = new BufferedReader(fr);
-            for (int i = 0; i < height / tileSize; i++) {
+            for (int i = 0; i < height / Game.BLOCK_SIZE; i++) {
                 String line = buffer.readLine();
-                for (int j = 0; j < width / tileSize; j++) {
-                    String[] nums = line.split(" ");
+                String[] nums = line.split(" ");
+                for (String num : nums) {
+                    System.out.print(num + " ");
+                }
+                System.out.println("");
+                for (int j = 0; j < width / Game.BLOCK_SIZE; j++) {
+
                     int num = Integer.parseInt(nums[j]);
                     if (num == 1) {
-                        entities.add(new Brick(i * tileSize, j * tileSize, tileSize, tileSize));
+                        entities.add(
+                                new Brick(j * Game.BLOCK_SIZE, i * Game.BLOCK_SIZE, Game.BLOCK_SIZE, Game.BLOCK_SIZE));
                     } else if (num == 2) {
-                        entities.add(new Steel(i * tileSize, j * tileSize, tileSize, tileSize));
+                        entities.add(
+                                new Steel(j * Game.BLOCK_SIZE, i * Game.BLOCK_SIZE, Game.BLOCK_SIZE, Game.BLOCK_SIZE));
                     } else if (num == 3) {
-                        entities.add(new Tree(i * tileSize, j * tileSize, tileSize, tileSize));
+                        entities.add(
+                                new Tree(j * Game.BLOCK_SIZE, i * Game.BLOCK_SIZE, Game.BLOCK_SIZE, Game.BLOCK_SIZE));
                     }
                 }
             }
