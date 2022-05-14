@@ -13,11 +13,13 @@ import Entity.Events.DomainEvent;
 import Presentation.BrickUIObject;
 import Presentation.InvisibleBlockUIObject;
 import Presentation.SteelUIObject;
+import Presentation.TankInfoUIObject;
 import Presentation.TankUIObject;
 import Presentation.TreeUIObject;
 import Presentation.ImageSet.TankImageSet;
 import Presentation.ImageSet.TankImageSet.TankImage;
 import Presentation.Layers.FloorGameLayer;
+import Presentation.Layers.GameInfoLayer;
 import Presentation.Layers.GameLayer;
 
 import java.awt.*;
@@ -29,7 +31,7 @@ import java.beans.PropertyChangeListener;
 public class Game extends JFrame implements PropertyChangeListener {
     private Map map;
     public static boolean DEBUG = true;
-    public static int BOARD_SIZE = 1000;
+    public static int BOARD_SIZE = 700;
     public static int BLOCK_SIZE = 40;
     private Thread gameThread;
     private Boolean gameOver = false;
@@ -37,16 +39,22 @@ public class Game extends JFrame implements PropertyChangeListener {
     private GameLayer tankGameLayer = new GameLayer();
     private GameLayer blockGameLayer = new GameLayer();
     private GameLayer effectGameLayer = new GameLayer();
+    private GameInfoLayer infoGameLayer = new GameInfoLayer();
 
     public Game() {
         this.map = new Map(BOARD_SIZE, BOARD_SIZE, 2, this);
         setAlwaysOnTop(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(BOARD_SIZE, BOARD_SIZE));
+        setTitle("TankOfWorld");
 
         // TODO: Temporary add the Tank Creator in the GamePanal.
-        tankGameLayer.addUIObject(new TankUIObject(map.getTank(0), TankImageSet.getTankImageSet(TankImage.A), this));
-        tankGameLayer.addUIObject(new TankUIObject(map.getTank(1), TankImageSet.getTankImageSet(TankImage.B), this));
+        TankUIObject tankUIObjectA = new TankUIObject(map.getTank(0), TankImageSet.getTankImageSet(TankImage.A), this);
+        TankUIObject tankUIObjectB = new TankUIObject(map.getTank(1), TankImageSet.getTankImageSet(TankImage.B), this);
+        tankGameLayer.addUIObject(tankUIObjectA);
+        tankGameLayer.addUIObject(tankUIObjectB);
+        infoGameLayer.addUIObject(new TankInfoUIObject(tankUIObjectA, 10, 10, 40));
+        infoGameLayer.addUIObject(new TankInfoUIObject(tankUIObjectB, 400, 10, 40));
 
         // Generate the BlockUIObject and add it to blockGameLayer.
         for (Entity entity : map.getEntities()) {
@@ -63,6 +71,7 @@ public class Game extends JFrame implements PropertyChangeListener {
 
         JLayeredPane jLayeredPane = getLayeredPane();
 
+        jLayeredPane.add(infoGameLayer);
         jLayeredPane.add(effectGameLayer);
         jLayeredPane.add(tankGameLayer);
         jLayeredPane.add(blockGameLayer);
