@@ -118,4 +118,24 @@ public class Tank extends MovingEntity {
         }
     }
 
+    public String getTankName() {
+        return this.tankName;
+    }
+
+    public BulletPool getBulletPool() {
+        return this.bulletPool;
+    }
+
+    public int getCurrentBullet() {
+        return this.bulletPool.getCurrentBullet();
+    }
+
+    public int getMaxBullet() {
+        return this.bulletPool.getMaxBullet();
+    }
+
+    public boolean getIsRealoding() {
+        return this.bulletPool.getIsRealoding();
+    }
+
 }
