@@ -28,6 +28,7 @@ import java.beans.PropertyChangeListener;
 
 public class Game extends JFrame implements PropertyChangeListener {
     private Map map;
+    public static boolean DEBUG = true;
     public static int BOARD_SIZE = 1000;
     public static int BLOCK_SIZE = 40;
     private Thread gameThread;
@@ -47,16 +48,15 @@ public class Game extends JFrame implements PropertyChangeListener {
         tankGameLayer.addUIObject(new TankUIObject(map.getTank(0), TankImageSet.getTankImageSet(TankImage.A), this));
         tankGameLayer.addUIObject(new TankUIObject(map.getTank(1), TankImageSet.getTankImageSet(TankImage.B), this));
 
-        // TODO: Temporary generate UIObject based on the type.
+        // Generate the BlockUIObject and add it to blockGameLayer.
         for (Entity entity : map.getEntities()) {
-
             if (entity instanceof Brick) {
                 blockGameLayer.addUIObject(new BrickUIObject(entity));
             } else if (entity instanceof Tree) {
                 blockGameLayer.addUIObject(new TreeUIObject(entity));
             } else if (entity instanceof Steel) {
                 blockGameLayer.addUIObject(new SteelUIObject(entity));
-            } else if (entity instanceof InvisibleBlock) {
+            } else if (entity instanceof InvisibleBlock && DEBUG) {
                 blockGameLayer.addUIObject(new InvisibleBlockUIObject(entity));
             }
         }
