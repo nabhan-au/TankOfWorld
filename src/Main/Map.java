@@ -78,10 +78,10 @@ public class Map {
             for (int i = 0; i < height / Game.BLOCK_SIZE; i++) {
                 String line = buffer.readLine();
                 String[] nums = line.split(" ");
-                for (String num : nums) {
-                    System.out.print(num + " ");
-                }
-                System.out.println("");
+//                for (String num : nums) {
+//                    System.out.print(num + " ");
+//                }
+//                System.out.println("");
                 for (int j = 0; j < width / Game.BLOCK_SIZE; j++) {
 
                     int num = Integer.parseInt(nums[j]);

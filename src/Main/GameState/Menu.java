@@ -3,14 +3,14 @@ package Main.GameState;
 import Main.Game;
 import Presentation.Layers.GameLayer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Menu extends State {
     private Game stateOwner;
@@ -36,8 +36,9 @@ public class Menu extends State {
 
     class MenuLayer extends JPanel {
         Font font;
-        JLabel title;
+        JLabel title, imageLabel;
         JButton single, multi, exit;
+        BufferedImage titleImage;
 
 
         public MenuLayer() {
@@ -46,11 +47,11 @@ public class Menu extends State {
 
             try{
                 font = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/ka1.ttf"));
-                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/ka1.ttf")));
             } catch (IOException | FontFormatException e) {
                 System.out.println("font not found");
             }
+            this.setBackground(new Color(70, 120, 80));
+
             this.setLayout(null);
             title = new JLabel("TANK OF WORLD");
             title.setBounds(getXforCenterText(0, Game.BOARD_SIZE, 550), 2*TILE_SIZE, 550, 80);
