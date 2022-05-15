@@ -16,7 +16,7 @@ import java.beans.PropertyChangeListener;
 public class Game extends JFrame implements PropertyChangeListener {
     private Map map;
     public static boolean DEBUG = true;
-    public static int BOARD_SIZE = 700;
+    public static int BOARD_SIZE = 800;
     public static int BLOCK_SIZE = 40;
     private Thread gameThread;
     private Boolean gameOver = false;
@@ -24,11 +24,10 @@ public class Game extends JFrame implements PropertyChangeListener {
     private JLayeredPane jLayeredPane;
 
     public Game() {
-        this.map = new Map(BOARD_SIZE, BOARD_SIZE, 2, this);
-        setAlwaysOnTop(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(BOARD_SIZE, BOARD_SIZE));
         setTitle("TankOfWorld");
+        setVisible(true);
         this.jLayeredPane = getLayeredPane();
         this.state = new Menu(this);
         pack();
@@ -44,7 +43,6 @@ public class Game extends JFrame implements PropertyChangeListener {
     }
 
     public void start() {
-        setVisible(true);
         gameThread = new Thread() {
             public void run() {
                 while (!gameOver) {
@@ -70,8 +68,16 @@ public class Game extends JFrame implements PropertyChangeListener {
     }
 
     public void gameOver() {
-        // TODO: Uncomment this line after testing complete
-        // gameOver = true;
+        if (DEBUG) {
+            return;
+        }
+        gameOver = true;
+    }
+
+    public void setMap(MapData mapData) {
+        setTitle("TankOfWorld: Map - " + mapData.getMapName());
+        setPreferredSize(new Dimension(mapData.getMapSize() * Game.BLOCK_SIZE, mapData.getMapSize() * Game.BLOCK_SIZE));
+        this.map = new Map(mapData, 2, this);
     }
 
     @Override
@@ -92,7 +98,6 @@ public class Game extends JFrame implements PropertyChangeListener {
     }
 
     public static void main(String[] args) throws Exception {
-        Game game = new Game();
-        game.start();
+        new Game();
     }
 }

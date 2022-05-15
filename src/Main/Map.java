@@ -1,8 +1,8 @@
 package Main;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Entity.*;
 import Entity.EntityList.*;
@@ -14,14 +14,21 @@ public class Map {
     private List<Tank> tanks = new ArrayList<Tank>();
     private List<Entity> entities = new ArrayList<Entity>();
 
-    public Map(int width, int height, int numPlayer, Game game) {
-        this.width = width;
-        this.height = height;
+    public Map(MapData mapData, int numPlayer, Game game) {
+        this.width = mapData.getMapSize();
+        this.height = mapData.getMapSize();
 
-        loadMap("maps/map1.map");
+        loadMap(mapData);
 
-        Tank tankA = new Tank(40, 40, "A");
-        Tank tankB = new Tank(500, 500, "B");
+        Random random = new Random();
+
+        List<int[]> freeSpeaces = mapData.getFreeSpaces();
+        int tankALocation = random.nextInt(freeSpeaces.size());
+        int tankBLocation = random.nextInt(freeSpeaces.size());
+        Tank tankA = new Tank(freeSpeaces.get(tankALocation)[0] * Game.BLOCK_SIZE,
+                freeSpeaces.get(tankALocation)[1] * Game.BLOCK_SIZE, "A");
+        Tank tankB = new Tank(freeSpeaces.get(tankBLocation)[0] * Game.BLOCK_SIZE,
+                freeSpeaces.get(tankBLocation)[1] * Game.BLOCK_SIZE, "B");
         tankA.addPropertyChangeListener(game);
         tankB.addPropertyChangeListener(game);
         tankA.setSize(40, 40);
@@ -70,38 +77,24 @@ public class Map {
         }
     }
 
-    public void loadMap(String map) {
-        try {
-            File file = new File(map); // creates a new file instance
-            FileReader fr = new FileReader(file);
-            BufferedReader buffer = new BufferedReader(fr);
-            for (int i = 0; i < height / Game.BLOCK_SIZE; i++) {
-                String line = buffer.readLine();
-                String[] nums = line.split(" ");
-                for (String num : nums) {
-                    System.out.print(num + " ");
-                }
-                System.out.println("");
-                for (int j = 0; j < width / Game.BLOCK_SIZE; j++) {
+    public void loadMap(MapData mapData) {
+        List<int[]> elementLocation = mapData.getElementsLocation();
 
-                    int num = Integer.parseInt(nums[j]);
-                    if (num == 1) {
-                        entities.add(
-                                new Brick(j * Game.BLOCK_SIZE, i * Game.BLOCK_SIZE, Game.BLOCK_SIZE, Game.BLOCK_SIZE));
-                    } else if (num == 2) {
-                        entities.add(
-                                new Steel(j * Game.BLOCK_SIZE, i * Game.BLOCK_SIZE, Game.BLOCK_SIZE, Game.BLOCK_SIZE));
-                    } else if (num == 3) {
-                        entities.add(
-                                new Tree(j * Game.BLOCK_SIZE, i * Game.BLOCK_SIZE, Game.BLOCK_SIZE, Game.BLOCK_SIZE));
-                    }
+        for (int i = 0; i < elementLocation.size(); i++) {
+            int[] elementInRow = elementLocation.get(i);
+            for (int j = 0; j < elementInRow.length; j++) {
+                if (elementInRow[j] == 1) {
+                    entities.add(
+                            new Brick(j * Game.BLOCK_SIZE, i * Game.BLOCK_SIZE, Game.BLOCK_SIZE, Game.BLOCK_SIZE));
+                } else if (elementInRow[j] == 2) {
+                    entities.add(
+                            new Steel(j * Game.BLOCK_SIZE, i * Game.BLOCK_SIZE, Game.BLOCK_SIZE, Game.BLOCK_SIZE));
+                } else if (elementInRow[j] == 3) {
+                    entities.add(
+                            new Tree(j * Game.BLOCK_SIZE, i * Game.BLOCK_SIZE, Game.BLOCK_SIZE, Game.BLOCK_SIZE));
                 }
             }
-            buffer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
     }
 
     public void addEntity(Entity entity) {
