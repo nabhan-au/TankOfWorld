@@ -28,7 +28,6 @@ public class PlayingMode extends State {
     public PlayingMode(Game stateOwner, int numPlayer) {
         this.map = stateOwner.getMap();
 
-        // TODO: Temporary add the Tank Creator in the GamePanal.
         TankUIObject tankUIObjectA = new TankUIObject(map.getTank(0), TankImageSet.getTankImageSet(TankImage.A),
                 stateOwner);
         TankUIObject tankUIObjectB = new TankUIObject(map.getTank(1), TankImageSet.getTankImageSet(TankImage.B),
