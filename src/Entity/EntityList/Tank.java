@@ -34,6 +34,7 @@ public class Tank extends MovingEntity {
     @Override
     public void onHit() {
         super.onHit();
+        this.flagToBeRemove();
         this.gameOver();
     }
 
