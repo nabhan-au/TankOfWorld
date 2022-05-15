@@ -11,10 +11,11 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.IOException;
 
 public class Menu extends State {
     private Game stateOwner;
-    private static int TILE_SIZE = 100;
+    private static int TILE_SIZE = Game.BOARD_SIZE / 12;
     private MenuLayer menuLayer = new MenuLayer();
 
     public Menu(Game stateOwner) {
@@ -27,7 +28,6 @@ public class Menu extends State {
     @Override
     public void repaint() {
         menuLayer.repaint();
-
     }
 
     @Override
@@ -36,32 +36,77 @@ public class Menu extends State {
     }
 
     class MenuLayer extends JPanel {
+        Font font;
+        JLabel title;
+        JButton single, multi, exit;
 
         public MenuLayer() {
+            super();
             setBounds(0, 0, Game.BOARD_SIZE, Game.BOARD_SIZE);
+
+            try {
+                font = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/ka1.ttf"));
+            } catch (IOException | FontFormatException e) {
+                System.out.println("font not found");
+            }
+            this.setBackground(new Color(70, 120, 80));
+
+            this.setLayout(null);
+            title = new JLabel("TANK OF WORLD");
+            title.setBounds(getXforCenterText(0, Game.BOARD_SIZE, 550), 2 * TILE_SIZE, 550, 80);
+            title.setFont(font.deriveFont(Font.BOLD, 50F));
+            title.setForeground(Color.BLACK);
+
+            single = new JButton("SINGLEPLAYER");
+            single.setBounds(getXforCenterText(0, Game.BOARD_SIZE, 340), 7 * TILE_SIZE, 340, 50);
+            single.setBackground(Color.BLACK);
+            single.setFont(font.deriveFont(Font.BOLD, 30F));
+            single.setForeground(Color.BLACK);
+            single.setFocusPainted(false);
+            single.setOpaque(false);
+            single.setBorderPainted(false);
+            single.setFocusable(false);
+
+            multi = new JButton("MULTIPLAYER");
+            multi.setBounds(getXforCenterText(0, Game.BOARD_SIZE, 305), 8 * TILE_SIZE, 305, 50);
+            multi.setBackground(Color.BLACK);
+            multi.setFont(font.deriveFont(Font.BOLD, 30F));
+            multi.setForeground(Color.BLACK);
+            multi.setFocusPainted(false);
+            multi.setOpaque(false);
+            multi.setBorderPainted(false);
+            multi.addActionListener(e -> startGame());
+            multi.setFocusable(false);
+
+            exit = new JButton("EXIT");
+            exit.setBounds(getXforCenterText(0, Game.BOARD_SIZE, 125), 9 * TILE_SIZE, 125, 50);
+            exit.setBackground(Color.BLACK);
+            exit.setFont(font.deriveFont(Font.BOLD, 30F));
+            exit.setForeground(Color.BLACK);
+            exit.setFocusPainted(false);
+            exit.setOpaque(false);
+            exit.setBorderPainted(false);
+            exit.setFocusable(false);
+            exit.addActionListener(e -> exitGame());
+
+            add(title);
+            add(single);
+            add(multi);
+            add(exit);
         }
 
-        @Override
-        public void paint(Graphics g) {
-            g.setFont(g.getFont().deriveFont(Font.BOLD, 96F));
-            String text = "Tank Of World";
-            int x = getXforCenterText(g, text, g.getFont(), 0, Game.BOARD_SIZE);
-            int y = TILE_SIZE;
-
-            g.setColor(Color.black);
-            g.drawString(text, x, y);
-
-            g.setFont(g.getFont().deriveFont(Font.BOLD, 48F));
-            text = "SINGLE PLAYER";
-            x = getXforCenterText(g, text, g.getFont(), 0, Game.BOARD_SIZE);
-            y = TILE_SIZE * 3;
-            g.drawString(text, x, y);
+        private void startGame() {
+            stateOwner.setState(new TwoPlayerMode(stateOwner));
+            stateOwner.remove(single);
+            stateOwner.remove(multi);
         }
 
-        public int getXforCenterText(Graphics g, String text, Font font, int x, int width) {
-            FontMetrics metrics = g.getFontMetrics(font);
-            int size = metrics.stringWidth(text);
-            return x + (width - size) / 2;
+        private void exitGame() {
+            System.exit(0);
+        }
+
+        public int getXforCenterText(int x, int width, int textWidth) {
+            return x + (width - textWidth) / 2;
         }
     }
 
