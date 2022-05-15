@@ -92,6 +92,7 @@ public class Menu extends State {
             single.setFocusPainted(false);
             single.setOpaque(false);
             single.setBorderPainted(false);
+            single.addActionListener(e -> startGame(1));
             single.setFocusable(false);
 
             multi = new JButton("MULTIPLAYER");
@@ -102,7 +103,7 @@ public class Menu extends State {
             multi.setFocusPainted(false);
             multi.setOpaque(false);
             multi.setBorderPainted(false);
-            multi.addActionListener(e -> startGame());
+            multi.addActionListener(e -> startGame(2));
             multi.setFocusable(false);
 
             exit = new JButton("EXIT");
@@ -122,11 +123,11 @@ public class Menu extends State {
             add(exit);
         }
 
-        private void startGame() {
+        private void startGame(int numPlay) {
             int pickOptionNum = pickOptionInputDialogBox("Enter map number you want to play", generateMapOptions());
             stateOwner.setMap(mapDatas.get(pickOptionNum - 1));
             stateOwner.start();
-            stateOwner.setState(new TwoPlayerMode(stateOwner));
+            stateOwner.setState(new PlayingMode(stateOwner, numPlay));
 
         }
 
@@ -140,7 +141,7 @@ public class Menu extends State {
     }
 
     public String showInputDialogBox(String message) {
-        return JOptionPane.showInputDialog(message);
+        return JOptionPane.showInputDialog(stateOwner, message);
     }
 
     public int pickOptionInputDialogBox(String message, List<String> options) {
