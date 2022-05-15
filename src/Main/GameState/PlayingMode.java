@@ -6,6 +6,7 @@ import Entity.EntityList.*;
 import Main.Game;
 import Main.KeyHandler;
 import Main.Map;
+import Main.AI.ArtificialNotIntelligent.ArtificialNotIntelligent;
 import Presentation.*;
 import Presentation.Layers.FloorGameLayer;
 import Presentation.Layers.GameInfoLayer;
@@ -15,18 +16,16 @@ import Presentation.ImageSet.TankImageSet.TankImage;
 
 import javax.swing.*;
 
-public class TwoPlayerMode extends State {
+public class PlayingMode extends State {
     private JPanel floorGameLayer = new FloorGameLayer();
     private GameLayer tankGameLayer = new GameLayer();
     private GameLayer blockGameLayer = new GameLayer();
     private GameLayer effectGameLayer = new GameLayer();
     private GameInfoLayer infoGameLayer = new GameInfoLayer();
     private Map map;
-    private Game stateOwner;
     public static boolean DEBUG = true;
 
-    public TwoPlayerMode(Game stateOwner) {
-        this.stateOwner = stateOwner;
+    public PlayingMode(Game stateOwner, int numPlayer) {
         this.map = stateOwner.getMap();
 
         // TODO: Temporary add the Tank Creator in the GamePanal.
@@ -65,14 +64,18 @@ public class TwoPlayerMode extends State {
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
                 KeyEvent.VK_CONTROL));
+        if (numPlayer == 1) {
+            new ArtificialNotIntelligent(map.getTank(1), map);
+        } else {
+            stateOwner.addKeyListener(new KeyHandler(
+                    map.getTank(1),
+                    KeyEvent.VK_A,
+                    KeyEvent.VK_D,
+                    KeyEvent.VK_W,
+                    KeyEvent.VK_S,
+                    KeyEvent.VK_SPACE));
+        }
 
-        stateOwner.addKeyListener(new KeyHandler(
-                map.getTank(1),
-                KeyEvent.VK_A,
-                KeyEvent.VK_D,
-                KeyEvent.VK_W,
-                KeyEvent.VK_S,
-                KeyEvent.VK_SPACE));
     }
 
     @Override
