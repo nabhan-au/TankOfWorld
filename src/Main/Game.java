@@ -2,11 +2,13 @@ package Main;
 
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import Entity.EntityList.Tank;
 import Entity.Events.DomainEvent;
 import Main.GameState.Menu;
 import Main.GameState.State;
-import Main.GameState.TwoPlayerMode;
 import Presentation.Layers.GameLayer;
 
 import java.awt.*;
@@ -15,7 +17,7 @@ import java.beans.PropertyChangeListener;
 
 public class Game extends JFrame implements PropertyChangeListener {
     private Map map;
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
     public static int BOARD_SIZE = 800;
     public static int BLOCK_SIZE = 40;
     private Thread gameThread;
@@ -43,6 +45,7 @@ public class Game extends JFrame implements PropertyChangeListener {
     }
 
     public void start() {
+        gameOver = false;
         gameThread = new Thread() {
             public void run() {
                 while (!gameOver) {
@@ -72,6 +75,22 @@ public class Game extends JFrame implements PropertyChangeListener {
             return;
         }
         gameOver = true;
+        Tank winTank = null;
+        for (Tank tank : map.getTankList()) {
+            if (!tank.getIsRemovable()) {
+                winTank = tank;
+                break;
+            }
+        }
+        String message = "";
+        if (winTank == null) {
+            message = "Unknown player win the game :(";
+        } else {
+            message = "Player " + winTank.getTankName() + " win!";
+        }
+        JOptionPane.showMessageDialog(this, message, "Game Over",
+                JOptionPane.INFORMATION_MESSAGE);
+        this.setState(new Menu(this));
     }
 
     public void setMap(MapData mapData) {
