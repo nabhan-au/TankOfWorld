@@ -15,7 +15,7 @@ import Presentation.ImageSet.TankImageSet.TankImage;
 
 import javax.swing.*;
 
-public class TwoPlayerMode  extends State{
+public class TwoPlayerMode extends State {
     private JPanel floorGameLayer = new FloorGameLayer();
     private GameLayer tankGameLayer = new GameLayer();
     private GameLayer blockGameLayer = new GameLayer();
@@ -30,8 +30,10 @@ public class TwoPlayerMode  extends State{
         this.map = stateOwner.getMap();
 
         // TODO: Temporary add the Tank Creator in the GamePanal.
-        TankUIObject tankUIObjectA = new TankUIObject(map.getTank(0), TankImageSet.getTankImageSet(TankImage.A), stateOwner);
-        TankUIObject tankUIObjectB = new TankUIObject(map.getTank(1), TankImageSet.getTankImageSet(TankImage.B), stateOwner);
+        TankUIObject tankUIObjectA = new TankUIObject(map.getTank(0), TankImageSet.getTankImageSet(TankImage.A),
+                stateOwner);
+        TankUIObject tankUIObjectB = new TankUIObject(map.getTank(1), TankImageSet.getTankImageSet(TankImage.B),
+                stateOwner);
         tankGameLayer.addUIObject(tankUIObjectA);
         tankGameLayer.addUIObject(tankUIObjectB);
         infoGameLayer.addUIObject(new TankInfoUIObject(tankUIObjectA, 10, 10, 40));
@@ -52,8 +54,8 @@ public class TwoPlayerMode  extends State{
         stateOwner.removeAllLayer();
         stateOwner.addLayer(infoGameLayer);
         stateOwner.addLayer(effectGameLayer);
-        stateOwner.addLayer(tankGameLayer);
         stateOwner.addLayer(blockGameLayer);
+        stateOwner.addLayer(tankGameLayer);
         stateOwner.addLayer(floorGameLayer);
 
         stateOwner.addKeyListener(new KeyHandler(
