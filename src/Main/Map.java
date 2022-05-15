@@ -117,4 +117,8 @@ public class Map {
         return this.tanks.get(tankNumber);
     }
 
+    public List<Tank> getTankList() {
+        return this.tanks;
+    }
+
 }
