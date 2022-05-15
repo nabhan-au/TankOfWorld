@@ -6,8 +6,6 @@ import Presentation.Layers.GameLayer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +15,13 @@ public class Menu extends State {
     private Game stateOwner;
     private static int TILE_SIZE = Game.BOARD_SIZE / 12;
     private MenuLayer menuLayer = new MenuLayer();
+    private List<MapData> mapDatas = new ArrayList<MapData>();
 
     public Menu(Game stateOwner) {
         this.stateOwner = stateOwner;
         stateOwner.removeAllLayer();
         stateOwner.addLayer(menuLayer);
-        stateOwner.addKeyListener(new Controller());
+        loadMapData();
     }
 
     @Override
@@ -33,6 +32,34 @@ public class Menu extends State {
     @Override
     public GameLayer getEffectGameLayer() {
         return null;
+    }
+
+    private void loadMapData() {
+        File files = new File("maps/");
+        String[] fileLists = files.list();
+        List<MapData> mapList = new ArrayList<MapData>();
+        for (String fileName : fileLists) {
+            try {
+                mapList.add(new MapData("maps/" + fileName));
+            } catch (Exception exception) {
+                System.out.println(exception);
+                continue;
+            } catch (Error error) {
+                System.out.println(error);
+                continue;
+            }
+        }
+        this.mapDatas = mapList;
+    }
+
+    private List<String> generateMapOptions() {
+        List<String> options = new ArrayList<String>();
+        for (MapData mapData : this.mapDatas) {
+            options.add(mapData.getMapName() + " (" + mapData.getMapSize() + "x"
+                    + mapData.getMapSize() + ")");
+        }
+        return options;
+
     }
 
     class MenuLayer extends JPanel {
@@ -96,9 +123,11 @@ public class Menu extends State {
         }
 
         private void startGame() {
+            int pickOptionNum = pickOptionInputDialogBox("Enter map number you want to play", generateMapOptions());
+            stateOwner.setMap(mapDatas.get(pickOptionNum - 1));
+            stateOwner.start();
             stateOwner.setState(new TwoPlayerMode(stateOwner));
-            stateOwner.remove(single);
-            stateOwner.remove(multi);
+
         }
 
         private void exitGame() {
@@ -107,40 +136,6 @@ public class Menu extends State {
 
         public int getXforCenterText(int x, int width, int textWidth) {
             return x + (width - textWidth) / 2;
-        }
-    }
-
-    class Controller extends KeyAdapter {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                File files = new File("maps/");
-                String[] fileLists = files.list();
-                List<MapData> mapList = new ArrayList<MapData>();
-                for (String fileName : fileLists) {
-                    try {
-                        mapList.add(new MapData("maps/" + fileName));
-                    } catch (Exception exception) {
-                        System.out.println(exception);
-                        continue;
-                    } catch (Error error) {
-                        System.out.println(error);
-                        continue;
-                    }
-                }
-
-                List<String> options = new ArrayList<String>();
-                for (MapData mapData : mapList) {
-                    options.add(mapData.getMapName() + " (" + mapData.getMapSize() + "x"
-                            + mapData.getMapSize() + ")");
-                }
-
-                int pickOptionNum = pickOptionInputDialogBox("Enter map number you want to play", options);
-                stateOwner.setMap(mapList.get(pickOptionNum - 1));
-                stateOwner.start();
-                stateOwner.setState(new TwoPlayerMode(stateOwner));
-
-            }
         }
     }
 
