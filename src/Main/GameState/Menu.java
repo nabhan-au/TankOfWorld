@@ -157,7 +157,7 @@ public class Menu extends State {
             for (TankType tankType : TankType.values()) {
                 options.add(tankType.getName());
             }
-            return TankType.values()[pickOptionInputDialogBox("Pick Player " + player + "Tank Type", options) - 1];
+            return TankType.values()[pickOptionInputDialogBox("Pick Player " + player + " Tank Type", options) - 1];
         }
 
         private TankImage askForTankImage(Integer player) {
@@ -165,7 +165,7 @@ public class Menu extends State {
             for (TankImage tankType : TankImage.values()) {
                 options.add(tankType.name());
             }
-            return TankImage.values()[pickOptionInputDialogBox("Pick Player " + player + "Tank Image", options) - 1];
+            return TankImage.values()[pickOptionInputDialogBox("Pick Player " + player + " Tank Image", options) - 1];
         }
 
         private void exitGame() {
