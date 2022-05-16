@@ -1,5 +1,8 @@
 import random
 data = ""
+map_name = input("Enter the Map name: ")
+
+data += map_name + "\n"
 
 for i in range(20):
     for j in range(20):
