@@ -125,9 +125,18 @@ public class Menu extends State {
 
         private void startGame(int numPlay) {
             int pickOptionNum = pickOptionInputDialogBox("Enter map number you want to play", generateMapOptions());
+            List<String> playerNames = new ArrayList<String>();
+            for (int i = 1; i <= numPlay; i++) {
+                String playerName = JOptionPane.showInputDialog(this, "Enter Name for Player " + i);
+                playerNames.add(playerName);
+            }
+            if (numPlay == 1) {
+                playerNames.add("AI");
+            }
+
             stateOwner.setMap(mapDatas.get(pickOptionNum - 1));
             stateOwner.start();
-            stateOwner.setState(new PlayingMode(stateOwner, numPlay));
+            stateOwner.setState(new PlayingMode(stateOwner, numPlay, playerNames));
 
         }
 
