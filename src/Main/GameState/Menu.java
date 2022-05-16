@@ -14,6 +14,7 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.io.IOException;
 
 public class Menu extends State {
@@ -139,7 +140,10 @@ public class Menu extends State {
                 playerNames.add(data);
             }
             if (numPlay == 1) {
-                playerNames.add(new TankPlayerData("AI", TankType.COCKROACH, TankImage.A));
+                Random randomType = new Random();
+                playerNames.add(new TankPlayerData("AI",
+                        TankType.values()[randomType.nextInt(0, TankType.values().length)],
+                        TankImage.values()[randomType.nextInt(0, TankImage.values().length)]));
             }
 
             stateOwner.setMap(mapDatas.get(pickOptionNum - 1));
