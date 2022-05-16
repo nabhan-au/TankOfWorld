@@ -44,37 +44,41 @@ public abstract class MovingEntity extends Entity {
             }
             switch (getDirection()) {
                 case UP:
-                    if ((getY() <= block.getY()+block.getHeight() && getY() > block.getY()) &&
-                        ((getX() < block.getX() + block.getWidth() && getX() > block.getX()) ||
-                        (getX() + getWidth() > block.getX()  && getX() < block.getX()) ||
-                        (getX() + getWidth()/2 > block.getX() && getX() + getWidth()/2 < block.getX() + block.getWidth()))) {
+                    if ((getY() <= block.getY() + block.getHeight() + speed && getY() > block.getY()) &&
+                            ((getX() < block.getX() + block.getWidth() && getX() > block.getX()) ||
+                                    (getX() + getWidth() > block.getX() && getX() < block.getX()) ||
+                                    (getX() + getWidth() / 2 > block.getX()
+                                            && getX() + getWidth() / 2 < block.getX() + block.getWidth()))) {
                         isCollision = true;
-                        return;   
+                        return;
                     }
                     break;
                 case DOWN:
-                    if ((getY() + getHeight() >= block.getY() && getY() < block.getY()) &&
-                        ((getX() < block.getX() + block.getWidth() && getX() > block.getX()) ||
-                        (getX() + getWidth() > block.getX()  && getX() < block.getX()) ||
-                        (getX() + getWidth()/2 > block.getX() && getX() + getWidth()/2 < block.getX() + block.getWidth()))) {
+                    if ((getY() + getHeight() + speed >= block.getY() && getY() < block.getY()) &&
+                            ((getX() < block.getX() + block.getWidth() && getX() > block.getX()) ||
+                                    (getX() + getWidth() > block.getX() && getX() < block.getX()) ||
+                                    (getX() + getWidth() / 2 > block.getX()
+                                            && getX() + getWidth() / 2 < block.getX() + block.getWidth()))) {
                         isCollision = true;
                         return;
                     }
                     break;
                 case LEFT:
-                    if ((getX() <= block.getX()+block.getWidth() && getX() > block.getX()) &&
-                        ((getY() < block.getY() + block.getHeight() && getY() > block.getY()) ||
-                        (getY() + getHeight() > block.getY()  && getY() < block.getY()) ||
-                        (getY() + getHeight()/2 > block.getY() && getY() + getHeight()/2 < block.getY() + block.getHeight()))) {
+                    if ((getX() <= block.getX() + block.getWidth() + speed && getX() > block.getX()) &&
+                            ((getY() < block.getY() + block.getHeight() && getY() > block.getY()) ||
+                                    (getY() + getHeight() > block.getY() && getY() < block.getY()) ||
+                                    (getY() + getHeight() / 2 > block.getY()
+                                            && getY() + getHeight() / 2 < block.getY() + block.getHeight()))) {
                         isCollision = true;
                         return;
                     }
                     break;
                 case RIGHT:
-                    if ((getX() + getWidth() >= block.getX() && getX() < block.getX()) &&
-                        ((getY() < block.getY() + block.getHeight() && getY() > block.getY()) ||
-                        (getY() + getHeight() > block.getY()  && getY() < block.getY()) ||
-                        (getY() + getHeight()/2 > block.getY() && getY() + getHeight()/2 < block.getY() + block.getHeight()))) {
+                    if ((getX() + getWidth() + speed >= block.getX() && getX() < block.getX()) &&
+                            ((getY() < block.getY() + block.getHeight() && getY() > block.getY()) ||
+                                    (getY() + getHeight() > block.getY() && getY() < block.getY()) ||
+                                    (getY() + getHeight() / 2 > block.getY()
+                                            && getY() + getHeight() / 2 < block.getY() + block.getHeight()))) {
                         isCollision = true;
                         return;
                     }
