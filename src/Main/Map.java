@@ -6,6 +6,7 @@ import java.util.List;
 import Entity.*;
 import Entity.EntityList.*;
 import Entity.EntityList.Tank;
+import Entity.EntityList.Tank.TankType;
 
 public class Map {
     private int width;
@@ -104,10 +105,10 @@ public class Map {
         return this.tanks;
     }
 
-    public Tank createNewPlayer(String name, Game game) {
+    public Tank createNewPlayer(String name, Game game, TankType tankType) {
         int[] freeSpace = mapData.getRandomedFreeSpaces();
         Tank newTank = new Tank(freeSpace[0] * Game.BLOCK_SIZE,
-                freeSpace[1] * Game.BLOCK_SIZE, name);
+                freeSpace[1] * Game.BLOCK_SIZE, name, tankType);
         newTank.addPropertyChangeListener(game);
         this.tanks.add(newTank);
         this.entities.add(newTank);
