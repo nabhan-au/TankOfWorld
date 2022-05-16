@@ -1,6 +1,8 @@
 package Main.GameState;
 
 import java.awt.event.KeyEvent;
+import java.util.List;
+
 import Entity.Entity;
 import Entity.EntityList.*;
 import Main.Game;
@@ -23,14 +25,15 @@ public class PlayingMode extends State {
     private GameLayer effectGameLayer = new GameLayer();
     private GameInfoLayer infoGameLayer = new GameInfoLayer();
     private Map map;
-    public static boolean DEBUG = true;
 
-    public PlayingMode(Game stateOwner, int numPlayer) {
+    public PlayingMode(Game stateOwner, int numPlayer, List<String> playerNames) {
         this.map = stateOwner.getMap();
 
-        TankUIObject tankUIObjectA = new TankUIObject(map.getTank(0), TankImageSet.getTankImageSet(TankImage.A),
+        TankUIObject tankUIObjectA = new TankUIObject(map.createNewPlayer(playerNames.get(0), stateOwner),
+                TankImageSet.getTankImageSet(TankImage.A),
                 stateOwner);
-        TankUIObject tankUIObjectB = new TankUIObject(map.getTank(1), TankImageSet.getTankImageSet(TankImage.B),
+        TankUIObject tankUIObjectB = new TankUIObject(map.createNewPlayer(playerNames.get(1), stateOwner),
+                TankImageSet.getTankImageSet(TankImage.B),
                 stateOwner);
         tankGameLayer.addUIObject(tankUIObjectA);
         tankGameLayer.addUIObject(tankUIObjectB);
@@ -45,7 +48,7 @@ public class PlayingMode extends State {
                 blockGameLayer.addUIObject(new TreeUIObject(entity));
             } else if (entity instanceof Steel) {
                 blockGameLayer.addUIObject(new SteelUIObject(entity));
-            } else if (entity instanceof InvisibleBlock && DEBUG) {
+            } else if (entity instanceof InvisibleBlock && Game.DEBUG) {
                 blockGameLayer.addUIObject(new InvisibleBlockUIObject(entity));
             }
         }
