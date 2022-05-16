@@ -13,18 +13,20 @@ public class Tank extends MovingEntity {
     private List<Bullet> bullets = new ArrayList<Bullet>();
     private BulletPool bulletPool;
     private String tankName;
+    private TankType tankType;
 
-    public Tank(int x, int y) {
-        super(x, y, 1);
-        this.bulletPool = new BulletPool();
+    public Tank(int x, int y, TankType tankType) {
+        super(x, y, tankType.getSpeed());
+        this.tankType = tankType;
+        this.bulletPool = new BulletPool(tankType.getBulletSize());
         this.setDirection(Direction.UP);
         tankName = "Annonymous";
         setSize(Game.BLOCK_SIZE - 10, Game.BLOCK_SIZE - 10);
 
     }
 
-    public Tank(int x, int y, String name) {
-        this(x, y);
+    public Tank(int x, int y, String name, TankType tankType) {
+        this(x, y, tankType);
         this.tankName = name;
     }
 
@@ -139,6 +141,43 @@ public class Tank extends MovingEntity {
 
     public boolean getIsRealoding() {
         return this.bulletPool.getIsRealoding();
+    }
+
+    public TankType getTankType() {
+        return this.tankType;
+    }
+
+    public enum TankType {
+        COCKROACH(3, 3),
+        MACHINE_GUNDER(1, 50),
+        BROKEN_TANK(0, 10000);
+
+        private int bulletSize;
+        private int speed;
+
+        private TankType(int speed, int bulletSize) {
+            this.speed = speed;
+            this.bulletSize = bulletSize;
+        }
+
+        public int getBulletSize() {
+            return this.bulletSize;
+        }
+
+        public int getSpeed() {
+            return this.speed;
+        }
+
+        public String getName() {
+            String name = this.name();
+            name = name.toLowerCase();
+            String[] nameSplitted = name.split("_");
+            String finalName = "";
+            for (String element : nameSplitted) {
+                finalName += element.substring(0, 1).toUpperCase() + element.substring(1, element.length());
+            }
+            return finalName;
+        }
     }
 
 }
