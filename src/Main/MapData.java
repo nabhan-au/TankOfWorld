@@ -6,11 +6,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MapData {
     private String mapName;
     private int mapSize;
     private String filePath;
+    private Random random = new Random();
     private List<int[]> elementsLocation = new ArrayList<int[]>();
 
     private List<int[]> freeSpaces = new ArrayList<int[]>();
@@ -77,6 +79,13 @@ public class MapData {
 
     public List<int[]> getFreeSpaces() {
         return this.freeSpaces;
+    }
+
+    public int[] getRandomedFreeSpaces() {
+        int freeSpaceIndex = random.nextInt(freeSpaces.size());
+        int[] freeLocation = freeSpaces.get(freeSpaceIndex);
+        freeSpaces.remove(freeSpaceIndex);
+        return freeLocation;
     }
 
 }

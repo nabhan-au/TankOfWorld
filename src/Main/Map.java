@@ -2,7 +2,6 @@ package Main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import Entity.*;
 import Entity.EntityList.*;
@@ -13,30 +12,14 @@ public class Map {
     private int height;
     private List<Tank> tanks = new ArrayList<Tank>();
     private List<Entity> entities = new ArrayList<Entity>();
+    private MapData mapData;
 
     public Map(MapData mapData, int numPlayer, Game game) {
         this.width = mapData.getMapSize();
         this.height = mapData.getMapSize();
 
         loadMap(mapData);
-
-        Random random = new Random();
-
-        List<int[]> freeSpeaces = mapData.getFreeSpaces();
-        int tankALocation = random.nextInt(freeSpeaces.size());
-        int tankBLocation = random.nextInt(freeSpeaces.size());
-        Tank tankA = new Tank(freeSpeaces.get(tankALocation)[0] * Game.BLOCK_SIZE,
-                freeSpeaces.get(tankALocation)[1] * Game.BLOCK_SIZE, "A");
-        Tank tankB = new Tank(freeSpeaces.get(tankBLocation)[0] * Game.BLOCK_SIZE,
-                freeSpeaces.get(tankBLocation)[1] * Game.BLOCK_SIZE, "B");
-        tankA.addPropertyChangeListener(game);
-        tankB.addPropertyChangeListener(game);
-        tankA.setSize(40, 40);
-        tankB.setSize(40, 40);
-        tanks.add(tankA);
-        tanks.add(tankB);
-        entities.add(tankA);
-        entities.add(tankB);
+        this.mapData = mapData;
         generateBoundary();
     }
 
@@ -119,6 +102,17 @@ public class Map {
 
     public List<Tank> getTankList() {
         return this.tanks;
+    }
+
+    public Tank createNewPlayer(String name, Game game) {
+        int[] freeSpace = mapData.getRandomedFreeSpaces();
+        Tank newTank = new Tank(freeSpace[0] * Game.BLOCK_SIZE,
+                freeSpace[1] * Game.BLOCK_SIZE, name);
+        newTank.addPropertyChangeListener(game);
+        this.tanks.add(newTank);
+        this.entities.add(newTank);
+
+        return newTank;
     }
 
 }
