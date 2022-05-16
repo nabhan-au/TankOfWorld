@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BulletPool {
-    public static int INITIAL_BULLET_SIZE = 5;
     public static int RELOAD_SPEED = 500;
     private List<Bullet> bulletPool = new ArrayList<Bullet>();
     private List<Bullet> reloadingBulletPool = new ArrayList<Bullet>();
     private Thread reloadingThread;
     private boolean isReloading = false;
+    private int bulletSize;
 
-    public BulletPool() {
-        for (int i = 0; i < INITIAL_BULLET_SIZE; i++) {
+    public BulletPool(int bulletSize) {
+        for (int i = 0; i < bulletSize; i++) {
             bulletPool.add(new Bullet());
         }
-
+        this.bulletSize = bulletSize;
     }
 
     public Bullet borrowBullet() {
@@ -60,7 +60,7 @@ public class BulletPool {
     }
 
     public int getMaxBullet() {
-        return BulletPool.INITIAL_BULLET_SIZE;
+        return this.bulletSize;
     }
 
     public boolean getIsRealoding() {
