@@ -8,13 +8,13 @@ import Entity.EntityList.*;
 import Main.Game;
 import Main.KeyHandler;
 import Main.Map;
+import Main.TankPlayerData;
 import Main.AI.ArtificialNotIntelligent.ArtificialNotIntelligent;
 import Presentation.*;
 import Presentation.Layers.FloorGameLayer;
 import Presentation.Layers.GameInfoLayer;
 import Presentation.Layers.GameLayer;
 import Presentation.ImageSet.*;
-import Presentation.ImageSet.TankImageSet.TankImage;
 
 import javax.swing.*;
 
@@ -26,19 +26,23 @@ public class PlayingMode extends State {
     private GameInfoLayer infoGameLayer = new GameInfoLayer();
     private Map map;
 
-    public PlayingMode(Game stateOwner, int numPlayer, List<String> playerNames) {
+    public PlayingMode(Game stateOwner, int numPlayer, List<TankPlayerData> tankDataList) {
         this.map = stateOwner.getMap();
 
-        TankUIObject tankUIObjectA = new TankUIObject(map.createNewPlayer(playerNames.get(0), stateOwner),
-                TankImageSet.getTankImageSet(TankImage.A),
-                stateOwner);
-        TankUIObject tankUIObjectB = new TankUIObject(map.createNewPlayer(playerNames.get(1), stateOwner),
-                TankImageSet.getTankImageSet(TankImage.B),
-                stateOwner);
-        tankGameLayer.addUIObject(tankUIObjectA);
-        tankGameLayer.addUIObject(tankUIObjectB);
-        infoGameLayer.addUIObject(new TankInfoUIObject(tankUIObjectA, 10, 10, 40));
-        infoGameLayer.addUIObject(new TankInfoUIObject(tankUIObjectB, 400, 10, 40));
+        int tankInfoLocationX = 10;
+        int tankInfoLocationY = 10;
+        int tankInfoSize = 40;
+        for (TankPlayerData tankPlayerData : tankDataList) {
+            TankUIObject tankUIObject = new TankUIObject(
+                    map.createNewPlayer(tankPlayerData.getPlayerName(), stateOwner, tankPlayerData.getTankType()),
+                    TankImageSet.getTankImageSet(tankPlayerData.getTankImage()),
+                    stateOwner);
+
+            tankGameLayer.addUIObject(tankUIObject);
+            infoGameLayer.addUIObject(
+                    new TankInfoUIObject(tankUIObject, tankInfoLocationX, tankInfoLocationY, tankInfoSize));
+            tankInfoLocationX += 390;
+        }
 
         // Generate the BlockUIObject and add it to blockGameLayer.
         for (Entity entity : map.getEntities()) {
