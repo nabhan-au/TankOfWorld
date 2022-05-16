@@ -51,7 +51,7 @@ public class Game extends JFrame implements PropertyChangeListener {
                 while (!gameOver) {
                     map.tick();
                     try {
-                        sleep(1000 / 300);
+                        sleep(1000 / 200);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

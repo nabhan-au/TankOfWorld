@@ -19,6 +19,8 @@ public class Tank extends MovingEntity {
         this.bulletPool = new BulletPool();
         this.setDirection(Direction.UP);
         tankName = "Annonymous";
+        setSize(Game.BLOCK_SIZE - 10, Game.BLOCK_SIZE - 10);
+
     }
 
     public Tank(int x, int y, String name) {
