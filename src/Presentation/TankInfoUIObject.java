@@ -27,7 +27,9 @@ public class TankInfoUIObject extends UIObject {
         if (tank.getIsRealoding()) {
             stringToDraw += " (Reloading . . .)";
         }
-        drawString(g, stringToDraw, x + size + 5, y);
+        stringToDraw += "\n" +
+                "Type: " + tank.getTankType().getName();
+        drawString(g, stringToDraw, x + size + 5, y - 5);
     }
 
     void drawString(Graphics g, String text, int x, int y) {
